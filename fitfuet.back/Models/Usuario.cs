@@ -19,7 +19,7 @@ namespace fitfuet.back.Models
         [Column(TypeName = "varchar(50)")]
         public string Email { get; set; }
         [Required]
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(100)")] //del front llega un string de máximo 20 caracteres
         public string Passwd { get; set; }
     }
 }
