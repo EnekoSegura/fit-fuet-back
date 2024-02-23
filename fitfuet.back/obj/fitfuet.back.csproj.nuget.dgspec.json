@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\fitfuet.back.csproj": {}
+    "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\fitfuet.back.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\fitfuet.back.csproj": {
+    "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\fitfuet.back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\fitfuet.back.csproj",
+        "projectUniqueName": "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\fitfuet.back.csproj",
         "projectName": "fitfuet.back",
-        "projectPath": "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\fitfuet.back.csproj",
+        "projectPath": "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\fitfuet.back.csproj",
         "packagesPath": "C:\\Users\\Eneko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\obj\\",
+        "outputPath": "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

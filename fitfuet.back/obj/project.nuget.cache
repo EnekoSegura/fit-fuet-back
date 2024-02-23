@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EYoWtWF4GTTxY9Ec5a8IlQVLygNttWPf+pd0dN1SYQp6jZcEJ9mloUd1A9zLQpGHr19rL+O1V8tGhYTWthie4w==",
+  "dgSpecHash": "kselymvx/ySDHgydl/V+r8+cQ737cKUxir4HaJpf/FUkhQ25bhj7nqLY5vO02gPn0L0mxUmLOntgZ/8VI1oLkg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Eneko\\Desktop\\proyecto - original\\BACK\\fitfuet.back\\fitfuet.back\\fitfuet.back.csproj",
+  "projectFilePath": "C:\\Users\\Eneko\\Desktop\\proyecto - clones\\fit-fuet-back\\fitfuet.back\\fitfuet.back.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Eneko\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\Eneko\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

@@ -48,11 +48,5 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("¡Prueba exitosa!");
-        }
     }
 }
