@@ -88,3 +88,11 @@ C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\obj\Debug\ne
 C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\obj\Debug\netcoreapp3.1\fitfuet.back.dll
 C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\obj\Debug\netcoreapp3.1\fitfuet.back.pdb
 C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\obj\Debug\netcoreapp3.1\fitfuet.back.genruntimeconfig.cache
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Eneko\Desktop\proyecto - clones\fit-fuet-back\fitfuet.back\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll

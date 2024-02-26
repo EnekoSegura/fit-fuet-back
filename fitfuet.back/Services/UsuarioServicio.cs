@@ -25,12 +25,11 @@ namespace fit_fuet_back.Servicios
             return 0;
         }
 
-        public async Task<bool> Login(string email, string passwd)
+        public async Task<Usuario> Login(string email, string passwd)
         {
             var passwdEncriptada = Encriptar.EncriptarPassword(passwd);
-            if (await _usuarioRepository.Login(email, passwdEncriptada))
-                return true;
-            return false;
+            var usuario = await _usuarioRepository.Login(email, passwdEncriptada);
+            return usuario;
         }
 
     }
