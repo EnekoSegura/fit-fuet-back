@@ -1,8 +1,12 @@
 ﻿using fit_fuet_back.IServicios;
 using fitfuet.back.IControllers;
 using fitfuet.back.Models;
+using fitfuet.back.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace fitfuet.back.Controllers
@@ -12,10 +16,12 @@ namespace fitfuet.back.Controllers
     public class UsuarioController : Controller, IUsuarioController
     {
         private readonly IUsuarioService _usuarioService;
+        private readonly IConfiguration _config;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        public UsuarioController(IUsuarioService usuarioService, IConfiguration config)
         {
             _usuarioService = usuarioService;
+            _config = config;
         }
 
         [HttpPost("crear")]
@@ -37,16 +43,26 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("login")]
-        public async Task<ActionResult<string>> login([FromQuery] string email, [FromQuery] string passwd)
+        public async Task<ActionResult<Usuario>> login([FromQuery] string email, [FromQuery] string passwd)
         {
-            if (await _usuarioService.Login(email, passwd))
+            var usuario = await _usuarioService.Login(email, passwd);
+
+            if (usuario != null)
             {
-                return Ok("Login existoso");
+                string tokenString = JwtConfigurator.getToken(usuario, _config);
+                return Ok(new { token = tokenString });
             }
             else
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<string> prueba()
+        {
+            return Ok("weka");
         }
     }
 }

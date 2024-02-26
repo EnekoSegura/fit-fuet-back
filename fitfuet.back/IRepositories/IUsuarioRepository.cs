@@ -9,7 +9,7 @@ namespace fit_fuet_back.IRepositorios
 
         Task Register([FromBody] Usuario usuario);
         Task<bool> Exist([FromBody] Usuario usuario);
-        Task<bool> Login(string email, string passwd);
+        Task<Usuario> Login(string email, string passwd);
 
     }
 }

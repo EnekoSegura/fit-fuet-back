@@ -29,10 +29,12 @@ namespace fit_fuet_back.Repositorios
             return validateExistence;
         }
 
-        public async Task<bool> Login(string email, string passwd)
+        public async Task<Usuario> Login(string email, string passwd)
         {
-            var validateExistence = await _context.Usuario.AnyAsync(x => x.Email == email && x.Passwd == passwd);
-            return validateExistence;
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email && x.Passwd == passwd);
+
+            return usuario;
         }
+
     }
 }
