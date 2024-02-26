@@ -37,7 +37,7 @@ namespace fit_fuet_back.Repositorios
             return usuario;
         }
 
-        public async Task<Usuario> GetPassword(string email)
+        public async Task<Usuario> GetUser(string email)
         {
             var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email);
             return validateExistence;

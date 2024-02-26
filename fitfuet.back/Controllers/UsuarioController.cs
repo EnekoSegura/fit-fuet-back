@@ -21,6 +21,7 @@ namespace fitfuet.back.Controllers
     {
         private readonly IUsuarioService _usuarioService;
         private readonly IConfiguration _config;
+        private const string EMAIL = "fitfuet@gmail.com";
 
         public UsuarioController(IUsuarioService usuarioService, IConfiguration config)
         {
@@ -69,44 +70,14 @@ namespace fitfuet.back.Controllers
             return Ok("weka");
         }
 
-        private static string email = "fitfuet@gmail.com";
-        private static string destino = "dam3.erlantzgsc@gmail.com";
-        //private static string contra = "Fitfuet2024";
-        //private static string destino = "dam3.erlantzgsc@gmail.com";
-
-        [HttpPost("enviar")]
-        public ActionResult<string> enviarMail()
-        {
-            var message = new MailMessage()
-            {
-                From = new MailAddress(email),
-                Subject = "Prueba",
-                IsBodyHtml = true,
-                Body = "Cuerpo de la prueba",
-            };
-
-            message.To.Add(new MailAddress(destino));
-
-            var smtp = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential(email, _config["ClaveAplicacion"]),
-                EnableSsl = true,
-            };
-
-            smtp.Send(message);
-
-            return Ok("Correcto");
-        }
-
-        [HttpPost("olvidar-contraseña")]
+        [HttpPost("passwd-recovery")]
         public async Task<ActionResult<string>> enviarMail([FromQuery] string Email)
         {
-            var usuario = await _usuarioService.GetPassword(Email);
+            var usuario = await _usuarioService.GetUser(Email);
             var newPasswd = GenerateRandomPassword();
             var message = new MailMessage()
             {
-                From = new MailAddress(email),
+                From = new MailAddress(EMAIL),
                 Subject = "Recuperación de contraseña para el usuario: " + usuario.Nombre + " " + usuario.Apellido,
                 IsBodyHtml = true,
                 Body = @"
@@ -150,7 +121,7 @@ namespace fitfuet.back.Controllers
             var smtp = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential(email, _config["ClaveAplicacion"]),
+                Credentials = new NetworkCredential(EMAIL, _config["ClaveAplicacion"]),
                 EnableSsl = true,
             };
 

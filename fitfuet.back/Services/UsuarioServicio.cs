@@ -32,9 +32,9 @@ namespace fit_fuet_back.Servicios
             return usuario;
         }
 
-        public async Task<Usuario> GetPassword(string email)
+        public async Task<Usuario> GetUser(string email)
         {
-            var usuario = await _usuarioRepository.GetPassword(email);
+            var usuario = await _usuarioRepository.GetUser(email);
             return usuario;
         }
 

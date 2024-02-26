@@ -10,7 +10,7 @@ namespace fit_fuet_back.IServicios
         Task<int> Register([FromBody] Usuario usuario);
         Task<Usuario> Login(string email, string passwd);
 
-        Task<Usuario> GetPassword(string email);
+        Task<Usuario> GetUser(string email);
         Task<bool> ChangePasswd(Usuario usuario, string newPasswd);
     }
 }
