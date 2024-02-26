@@ -75,6 +75,8 @@ namespace fitfuet.back
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowWebapp");
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

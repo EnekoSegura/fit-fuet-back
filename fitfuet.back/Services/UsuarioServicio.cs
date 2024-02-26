@@ -32,5 +32,16 @@ namespace fit_fuet_back.Servicios
             return usuario;
         }
 
+        public async Task<Usuario> GetPassword(string email)
+        {
+            var usuario = await _usuarioRepository.GetPassword(email);
+            return usuario;
+        }
+
+        public async Task<bool> ChangePasswd(Usuario usuario, string newPasswd)
+        {
+            var check = await _usuarioRepository.ChangePasswd(usuario, newPasswd);
+            return check;
+        }
     }
 }
