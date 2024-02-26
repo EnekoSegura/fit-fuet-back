@@ -1,6 +1,7 @@
 ﻿using fit_fuet_back.Context;
 using fit_fuet_back.IRepositorios;
 using fitfuet.back.Models;
+using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -36,5 +37,30 @@ namespace fit_fuet_back.Repositorios
             return usuario;
         }
 
+        public async Task<Usuario> GetUser(string email)
+        {
+            var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email);
+            return validateExistence;
+        }
+
+        public async Task<bool> ChangePasswd(Usuario usuario, string newPasswd)
+        {
+            var userExists = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && x.Email == usuario.Email);
+
+            if (userExists)
+            {
+                // Actualizar la contraseña del usuario
+                usuario.Passwd = Encriptar.EncriptarPassword(newPasswd);
+
+                _context.Usuario.Update(usuario);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
