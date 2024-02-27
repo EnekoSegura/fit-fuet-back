@@ -30,16 +30,16 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpPost("crear")]
-        public async Task<ActionResult<Usuario>> crearUsuario([FromBody] Usuario usuario)
+        public async Task<ActionResult<int>> crearUsuario([FromBody] Usuario usuario)
         {
             var tryRegister = await _usuarioService.Register(usuario);
             if (tryRegister == 0)
             {
-                return Ok(usuario);
+                return Ok(0);
             }
             else if(tryRegister == 1)
             {
-                return BadRequest("El usuario ya existe");
+                return BadRequest(1);
             }
             else
             {
