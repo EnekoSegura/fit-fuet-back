@@ -22,14 +22,16 @@ namespace fitfuet.back.Utils
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.Nombre),
-                new Claim("idUsuario", usuario.Id.ToString())
+                new Claim("idUsuario", usuario.Id.ToString()),
+                new Claim("nombreUsuario", usuario.Nombre),
+                new Claim("apellidoUsuario", usuario.Apellido)
             };
 
             var token = new JwtSecurityToken(
                 issuer: Issuer,
                 audience: Audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials
             );
 
