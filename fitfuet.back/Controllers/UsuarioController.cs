@@ -135,6 +135,19 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
         }
 
+        [HttpPost("change-password")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> cambiarPasswd([FromQuery] int idUsuario, [FromQuery] string nuevaPassword)
+        {
+            var check = await _usuarioService.cambiarPasswd(idUsuario, Encriptar.EncriptarPassword(nuevaPassword));
+            if (check)
+                return Ok();
+            else
+                return BadRequest();
+        }
+        //TODO: En el front hay que hacer un formulario para introducir el email, la contraseña actual y la nueva (2 veces)
+        //si el email y contraseña coinciden, es decir, si llamando al login se encuentra un usuario, se accederá al metodo cambiarPasswd
+
         private string GenerateRandomPassword()
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";

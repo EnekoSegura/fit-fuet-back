@@ -4,6 +4,7 @@ using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace fit_fuet_back.Repositorios
@@ -49,18 +50,28 @@ namespace fit_fuet_back.Repositorios
 
             if (userExists)
             {
-                // Actualizar la contraseña del usuario
                 usuario.Passwd = Encriptar.EncriptarPassword(newPasswd);
-
                 _context.Usuario.Update(usuario);
                 await _context.SaveChangesAsync();
-
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        public async Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Id == idUsuario);
+            if(usuario != null)
+            {
+                usuario.Passwd = nuevaPassword;
+                _context.Usuario.Update(usuario);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

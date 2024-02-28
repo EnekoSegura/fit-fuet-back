@@ -43,5 +43,11 @@ namespace fit_fuet_back.Servicios
             var check = await _usuarioRepository.ChangePasswd(usuario, newPasswd);
             return check;
         }
+
+        public async Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword)
+        {
+            var check = await _usuarioRepository.cambiarPasswd(idUsuario, nuevaPassword);
+            return check;
+        }
     }
 }
