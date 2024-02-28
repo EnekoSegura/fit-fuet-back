@@ -67,13 +67,15 @@ namespace fitfuet.back.Controllers
         public async Task<ActionResult<string>> enviarMail([FromQuery] string Email)
         {
             var usuario = await _usuarioService.GetUser(Email);
-            var newPasswd = GenerateRandomPassword();
-            var message = new MailMessage()
+            if (usuario != null)
             {
-                From = new MailAddress(EMAIL),
-                Subject = "Recuperación de contraseña para el usuario: " + usuario.Nombre + " " + usuario.Apellido,
-                IsBodyHtml = true,
-                Body = @"
+                var newPasswd = GenerateRandomPassword();
+                var message = new MailMessage()
+                {
+                    From = new MailAddress(EMAIL),
+                    Subject = "Recuperación de contraseña para el usuario: " + usuario.Nombre + " " + usuario.Apellido,
+                    IsBodyHtml = true,
+                    Body = @"
                         <html>
                         <head>
                             <style>
@@ -107,25 +109,27 @@ namespace fitfuet.back.Controllers
                             </div>
                         </body>
                         </html>"
-            };
+                };
 
-            message.To.Add(new MailAddress(Email));
+                message.To.Add(new MailAddress(Email));
 
-            var smtp = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential(EMAIL, _config["ClaveAplicacion"]),
-                EnableSsl = true,
-            };
+                var smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential(EMAIL, _config["ClaveAplicacion"]),
+                    EnableSsl = true,
+                };
 
-            smtp.Send(message);
+                smtp.Send(message);
 
-            var check = await _usuarioService.ChangePasswd(usuario, newPasswd);
+                var check = await _usuarioService.ChangePasswd(usuario, Encriptar.EncriptarPassword(newPasswd));
 
-            if (check)
-                return Ok("Correcto");
-            else
-                return BadRequest();
+                if (check)
+                    return Ok();
+                else
+                    return BadRequest("No se pudo enviar correo electrónico de recuperación");
+            }
+            return BadRequest("El correo electrónico indicado no existe");
         }
 
         [HttpPost("change-password")]
