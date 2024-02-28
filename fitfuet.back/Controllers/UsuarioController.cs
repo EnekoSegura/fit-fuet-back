@@ -48,7 +48,7 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("login")]
-        public async Task<ActionResult<Usuario>> login([FromQuery] string email, [FromQuery] string passwd)
+        public async Task<ActionResult<string>> login([FromQuery] string email, [FromQuery] string passwd)
         {
             var usuario = await _usuarioService.Login(email, passwd);
 
@@ -61,13 +61,6 @@ namespace fitfuet.back.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult<string> prueba()
-        {
-            return Ok("weka");
         }
 
         [HttpPost("passwd-recovery")]
@@ -137,13 +130,22 @@ namespace fitfuet.back.Controllers
 
         [HttpPost("change-password")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> cambiarPasswd([FromQuery] int idUsuario, [FromQuery] string nuevaPassword)
+        public async Task<ActionResult> cambiarPasswd([FromQuery] int idUsuario, [FromQuery] string nuevaPassword, [FromQuery] string email, [FromQuery] string antiguaPassword)
         {
-            var check = await _usuarioService.cambiarPasswd(idUsuario, nuevaPassword);
-            if (check)
-                return Ok();
+            var loginCorrecto = await _usuarioService.Login(email, antiguaPassword);
+
+            if(loginCorrecto != null)
+            {
+                var check = await _usuarioService.cambiarPasswd(idUsuario, nuevaPassword);
+                if (check)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
             else
+            {
                 return BadRequest();
+            }
         }
         //TODO: En el front hay que hacer un formulario para introducir el email, la contraseña actual y la nueva (2 veces)
         //si el email y contraseña coinciden, es decir, si llamando al login se encuentra un usuario, se accederá al metodo cambiarPasswd
