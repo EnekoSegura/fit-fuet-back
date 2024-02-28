@@ -20,15 +20,15 @@ namespace fit_fuet_back.Servicios
         {
             if (await _usuarioRepository.Exist(usuario))
                 return 1;
-            usuario.Passwd = Encriptar.EncriptarPassword(usuario.Passwd);
+            usuario.Passwd = usuario.Passwd;
             await _usuarioRepository.Register(usuario);
             return 0;
         }
 
         public async Task<Usuario> Login(string email, string passwd)
         {
-            var passwdEncriptada = Encriptar.EncriptarPassword(passwd);
-            var usuario = await _usuarioRepository.Login(email, passwdEncriptada);
+            //var passwdEncriptada = Encriptar.EncriptarPassword(passwd);
+            var usuario = await _usuarioRepository.Login(email, passwd);
             return usuario;
         }
 
@@ -38,12 +38,14 @@ namespace fit_fuet_back.Servicios
             return usuario;
         }
 
+        //Cuando olvidas la contraseña
         public async Task<bool> ChangePasswd(Usuario usuario, string newPasswd)
         {
             var check = await _usuarioRepository.ChangePasswd(usuario, newPasswd);
             return check;
         }
 
+        //Cuando sabes la contraseña
         public async Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword)
         {
             var check = await _usuarioRepository.cambiarPasswd(idUsuario, nuevaPassword);

@@ -44,13 +44,14 @@ namespace fit_fuet_back.Repositorios
             return validateExistence;
         }
 
+        //Cuando olvidas la contraseña
         public async Task<bool> ChangePasswd(Usuario usuario, string newPasswd)
         {
             var userExists = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && x.Email == usuario.Email);
 
             if (userExists)
             {
-                usuario.Passwd = Encriptar.EncriptarPassword(newPasswd);
+                usuario.Passwd = newPasswd;
                 _context.Usuario.Update(usuario);
                 await _context.SaveChangesAsync();
                 return true;
@@ -61,6 +62,7 @@ namespace fit_fuet_back.Repositorios
             }
         }
 
+        //Cuando sabes la contraseña
         public async Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword)
         {
             var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Id == idUsuario);

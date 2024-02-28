@@ -139,7 +139,7 @@ namespace fitfuet.back.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> cambiarPasswd([FromQuery] int idUsuario, [FromQuery] string nuevaPassword)
         {
-            var check = await _usuarioService.cambiarPasswd(idUsuario, Encriptar.EncriptarPassword(nuevaPassword));
+            var check = await _usuarioService.cambiarPasswd(idUsuario, nuevaPassword);
             if (check)
                 return Ok();
             else
