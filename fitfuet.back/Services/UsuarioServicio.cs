@@ -27,7 +27,6 @@ namespace fit_fuet_back.Servicios
 
         public async Task<Usuario> Login(string email, string passwd)
         {
-            //var passwdEncriptada = Encriptar.EncriptarPassword(passwd);
             var usuario = await _usuarioRepository.Login(email, passwd);
             return usuario;
         }

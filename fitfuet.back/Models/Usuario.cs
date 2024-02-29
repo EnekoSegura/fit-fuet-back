@@ -5,7 +5,6 @@ namespace fitfuet.back.Models
 {
     public class Usuario : EntidadBase
     {
-
         [Required]
         [Column(TypeName = "varchar(9)")]
         public string Dni { get; set; }
@@ -21,5 +20,7 @@ namespace fitfuet.back.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string Passwd { get; set; }
+        [Required]
+        public int CuentaActiva { get; set; } //0 activa, 1 inactiva
     }
 }

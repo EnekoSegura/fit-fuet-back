@@ -27,20 +27,21 @@ namespace fit_fuet_back.Repositorios
 
         public async Task<bool> Exist([FromBody] Usuario usuario)
         {
-            var validateExistence = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni || x.Email == usuario.Email);
+            var validateExistence = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && usuario.CuentaActiva == 0 
+                                || x.Email == usuario.Email && usuario.CuentaActiva == 0);
             return validateExistence;
         }
 
         public async Task<Usuario> Login(string email, string passwd)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email && x.Passwd == passwd);
-
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email && x.Passwd == passwd 
+                        && x.CuentaActiva == 0);
             return usuario;
         }
 
         public async Task<Usuario> GetUser(string email)
         {
-            var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email);
+            var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email && x.CuentaActiva == 0);
             return validateExistence;
         }
 
