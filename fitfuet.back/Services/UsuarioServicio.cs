@@ -66,5 +66,11 @@ namespace fit_fuet_back.Servicios
                 return false;
             }
         }
+
+        public async Task<string> obtenerFotoUsuario(int idUsuario)
+        {
+            var usuario = await _usuarioRepository.GetUser(idUsuario);
+            return usuario.Foto;
+        }
     }
 }

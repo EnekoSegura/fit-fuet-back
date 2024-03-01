@@ -70,6 +70,9 @@ namespace fitfuet.back.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(MAX)");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("varchar(20)");

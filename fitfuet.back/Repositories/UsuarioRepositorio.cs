@@ -28,8 +28,8 @@ namespace fit_fuet_back.Repositorios
 
         public async Task<bool> Exist([FromBody] Usuario usuario)
         {
-            var validateExistence = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && usuario.CuentaActiva == 0 
-                                || x.Email == usuario.Email && usuario.CuentaActiva == 0);
+            var validateExistence = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && usuario.CuentaActiva == 1 
+                                || x.Email == usuario.Email && usuario.CuentaActiva == 1);
             return validateExistence;
         }
 
@@ -43,6 +43,12 @@ namespace fit_fuet_back.Repositorios
         public async Task<Usuario> GetUser(string email)
         {
             var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == email && x.CuentaActiva == 0);
+            return validateExistence;
+        }
+
+        public async Task<Usuario> GetUser(int idUser)
+        {
+            var validateExistence = await _context.Usuario.FirstOrDefaultAsync(x => x.Id == idUser && x.CuentaActiva == 0);
             return validateExistence;
         }
 
@@ -88,7 +94,6 @@ namespace fit_fuet_back.Repositorios
             }
             catch (Exception)
             {
-                // Manejar excepciones según tus necesidades
                 return false;
             }
         }

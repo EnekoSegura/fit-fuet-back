@@ -24,7 +24,9 @@ namespace fitfuet.back.Utils
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.Nombre),
                 new Claim("idUsuario", usuario.Id.ToString()),
                 new Claim("nombreUsuario", usuario.Nombre),
-                new Claim("apellidoUsuario", usuario.Apellido)
+                new Claim("apellidoUsuario", usuario.Apellido),
+                new Claim("dniUsuario", usuario.Dni),
+                new Claim("emailUsuario", usuario.Email)
             };
 
             var token = new JwtSecurityToken(

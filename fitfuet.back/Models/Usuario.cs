@@ -22,5 +22,7 @@ namespace fitfuet.back.Models
         public string Passwd { get; set; }
         [Required]
         public int CuentaActiva { get; set; } //0 activa, 1 inactiva
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string Foto { get; set; }
     }
 }

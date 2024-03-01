@@ -176,6 +176,15 @@ namespace fitfuet.back.Controllers
             }
         }
 
+        [HttpGet("foto")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<string>> obtenerImagenUsuario([FromQuery] int idUsuario)
+        {
+            var imagen = await _usuarioService.obtenerFotoUsuario(idUsuario);
+            var respuesta = new { imagen };
+            return Ok(respuesta);
+        }
+
         private string GenerateRandomPassword()
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -183,6 +192,5 @@ namespace fitfuet.back.Controllers
             return new string(Enumerable.Repeat(chars, 8)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-
     }
 }

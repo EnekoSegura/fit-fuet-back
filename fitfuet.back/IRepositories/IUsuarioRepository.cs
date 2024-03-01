@@ -11,9 +11,9 @@ namespace fit_fuet_back.IRepositorios
         Task<bool> Exist([FromBody] Usuario usuario);
         Task<Usuario> Login(string email, string passwd);
         Task<Usuario> GetUser(string email);
+        Task<Usuario> GetUser(int idUser);
         Task<bool> ChangePasswd(Usuario usuario, string newPasswd);
         Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword);
         Task<bool> UpdateUsuario(Usuario usuario);
-
     }
 }
