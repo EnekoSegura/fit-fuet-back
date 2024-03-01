@@ -13,6 +13,7 @@ namespace fit_fuet_back.IRepositorios
         Task<Usuario> GetUser(string email);
         Task<bool> ChangePasswd(Usuario usuario, string newPasswd);
         Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword);
+        Task<bool> UpdateUsuario(Usuario usuario);
 
     }
 }

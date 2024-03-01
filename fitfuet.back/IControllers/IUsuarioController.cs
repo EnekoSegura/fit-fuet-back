@@ -10,5 +10,6 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<string>> login(string email, string passwd);
         Task<ActionResult<string>> enviarMail([FromQuery] string Email);
         Task<ActionResult> cambiarPasswd([FromQuery] int idUsuario, [FromQuery] string nuevaPassword, [FromQuery] string email, [FromQuery] string antiguaPassword);
+        Task<ActionResult<string>> eliminarCuenta([FromQuery] string email, [FromQuery] string passwd);
     }
 }

@@ -4,6 +4,7 @@ using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,6 +76,21 @@ namespace fit_fuet_back.Repositorios
                 return true;
             }
             return false;
+        }
+
+        public async Task<bool> UpdateUsuario(Usuario usuario)
+        {
+            try
+            {
+                _context.Usuario.Update(usuario);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                // Manejar excepciones según tus necesidades
+                return false;
+            }
         }
     }
 }

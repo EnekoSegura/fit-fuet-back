@@ -154,6 +154,28 @@ namespace fitfuet.back.Controllers
         //TODO: En el front hay que hacer un formulario para introducir el email, la contraseña actual y la nueva (2 veces)
         //si el email y contraseña coinciden, es decir, si llamando al login se encuentra un usuario, se accederá al metodo cambiarPasswd
 
+        [HttpPost("eliminar-cuenta")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<string>> eliminarCuenta([FromQuery] string email, [FromQuery] string passwd)
+        {
+            // Verificar que el usuario existe y la contraseña es correcta
+            var usuario = await _usuarioService.GetUser(email);
+            if (usuario != null)
+            {
+                // Cambiar el estado de cuenta a 1 (inactivo)
+                var check = await _usuarioService.CambiarEstadoCuenta(usuario, 1);
+
+                if (check)
+                    return Ok();
+                else
+                    return BadRequest("No se pudo cambiar el estado de la cuenta");
+            }
+            else
+            {
+                return BadRequest("Usuario no encontrado o contraseña incorrecta");
+            }
+        }
+
         private string GenerateRandomPassword()
         {
             const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";

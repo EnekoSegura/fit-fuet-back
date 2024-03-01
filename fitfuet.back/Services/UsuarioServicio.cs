@@ -3,6 +3,7 @@ using fit_fuet_back.IServicios;
 using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace fit_fuet_back.Servicios
@@ -49,6 +50,21 @@ namespace fit_fuet_back.Servicios
         {
             var check = await _usuarioRepository.cambiarPasswd(idUsuario, nuevaPassword);
             return check;
+        }
+
+        public async Task<bool> CambiarEstadoCuenta(Usuario usuario, int nuevoEstado)
+        {
+            try
+            {
+                usuario.CuentaActiva = nuevoEstado;
+                var check = await _usuarioRepository.UpdateUsuario(usuario);
+                return check;
+            }
+            catch (Exception)
+            {
+                // Manejar excepciones según tus necesidades
+                return false;
+            }
         }
     }
 }
