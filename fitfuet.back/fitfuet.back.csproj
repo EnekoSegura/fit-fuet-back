@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20240229093825_cuentaActivaUsuarioYModeloDatosUsuario.Designer.cs" />
     <Compile Remove="Migrations\20240301105058_fotoABytes.cs" />
     <Compile Remove="Migrations\20240301105058_fotoABytes.Designer.cs" />
+    <Compile Remove="Migrations\20240304100041_modeloEjercicio.cs" />
+    <Compile Remove="Migrations\20240304100041_modeloEjercicio.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
