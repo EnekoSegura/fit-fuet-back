@@ -192,5 +192,13 @@ namespace fitfuet.back.Controllers
             return new string(Enumerable.Repeat(chars, 8)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        [HttpPut("actualizar-datos")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<bool>> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario)
+        {
+            var check = await _usuarioService.actualizarDatosUsuario(usuario);
+            return check;
+        }
     }
 }

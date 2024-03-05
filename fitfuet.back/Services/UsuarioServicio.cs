@@ -72,5 +72,10 @@ namespace fit_fuet_back.Servicios
             var usuario = await _usuarioRepository.GetUser(idUsuario);
             return usuario.Foto;
         }
+        public async Task<ActionResult<bool>> actualizarDatosUsuario(UsuarioActualizado usuario)
+        {
+            var check = await _usuarioRepository.ActualizarDatosUsuario(usuario);
+            return check;
+        }
     }
 }

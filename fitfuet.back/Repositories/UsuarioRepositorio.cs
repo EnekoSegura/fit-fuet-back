@@ -97,5 +97,17 @@ namespace fit_fuet_back.Repositorios
                 return false;
             }
         }
+
+        public async Task<bool> ActualizarDatosUsuario(UsuarioActualizado usuarioActualizado)
+        {
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == usuarioActualizado.Email && x.CuentaActiva == 0);
+            usuario.Nombre = usuarioActualizado.Nombre;
+            usuario.Apellido = usuarioActualizado.Apellido;
+            usuario.Email = usuarioActualizado.Email;
+            usuario.Dni = usuarioActualizado.Dni;
+            usuario.Foto = usuarioActualizado.Foto;
+
+            return await UpdateUsuario(usuario);
+        }
     }
 }

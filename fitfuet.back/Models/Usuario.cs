@@ -25,4 +25,13 @@ namespace fitfuet.back.Models
         [Column(TypeName = "nvarchar(MAX)")]
         public string Foto { get; set; }
     }
+
+    public class UsuarioActualizado : EntidadBase
+    {
+        public string Dni { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+        public string Foto { get; set; }
+    }
 }
