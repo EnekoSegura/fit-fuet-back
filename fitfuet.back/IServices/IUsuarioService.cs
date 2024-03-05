@@ -14,6 +14,6 @@ namespace fit_fuet_back.IServicios
         Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword);
         Task<bool> CambiarEstadoCuenta(Usuario usuario, int nuevoEstado);
         Task<string> obtenerFotoUsuario(int idUsuario);
-        Task<ActionResult<bool>> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario);
+        Task<Usuario> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario);
     }
 }

@@ -195,10 +195,18 @@ namespace fitfuet.back.Controllers
 
         [HttpPut("actualizar-datos")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<bool>> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario)
+        public async Task<ActionResult<string>> actualizarDatosUsuario([FromBody] UsuarioActualizado _usuario)
         {
-            var check = await _usuarioService.actualizarDatosUsuario(usuario);
-            return check;
+            var usuario = await _usuarioService.actualizarDatosUsuario(_usuario);
+            if (usuario != null)
+            {
+                string tokenString = JwtConfigurator.getToken(usuario, _config);
+                return Ok(new { token = tokenString });
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -98,16 +98,16 @@ namespace fit_fuet_back.Repositorios
             }
         }
 
-        public async Task<bool> ActualizarDatosUsuario(UsuarioActualizado usuarioActualizado)
+        public async Task<Usuario> ActualizarDatosUsuario(UsuarioActualizado _usuarioActualizado)
         {
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == usuarioActualizado.Email && x.CuentaActiva == 0);
-            usuario.Nombre = usuarioActualizado.Nombre;
-            usuario.Apellido = usuarioActualizado.Apellido;
-            usuario.Email = usuarioActualizado.Email;
-            usuario.Dni = usuarioActualizado.Dni;
-            usuario.Foto = usuarioActualizado.Foto;
-
-            return await UpdateUsuario(usuario);
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(x => x.Email == _usuarioActualizado.Email && x.CuentaActiva == 0);
+            usuario.Nombre = _usuarioActualizado.Nombre;
+            usuario.Apellido = _usuarioActualizado.Apellido;
+            usuario.Email = _usuarioActualizado.Email;
+            usuario.Dni = _usuarioActualizado.Dni;
+            usuario.Foto = _usuarioActualizado.Foto;
+            await UpdateUsuario(usuario);
+            return usuario;
         }
     }
 }
