@@ -38,9 +38,11 @@ namespace fitfuet.back
 
             //Servicios
             services.AddScoped<IUsuarioService, UsuarioServicio>();
+            services.AddScoped<IEjercicioServicio, EjercicicoServicio>();
 
             //Repositorios
             services.AddScoped<IUsuarioRepository, UsuarioRepositorio>();
+            services.AddScoped<IEjercicioRepositorio, EjercicioRepositorio>();
 
             //Cors
             services.AddCors(options => options.AddPolicy("AllowWebapp",
