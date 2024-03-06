@@ -5,7 +5,9 @@ using fitfuet.back.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace fitfuet.back.Controllers
@@ -42,6 +44,39 @@ namespace fitfuet.back.Controllers
         {
             var lista = await _ejercicioServicio.obtenerListaEjercios();
             return lista;
+        }
+
+        [HttpPost("guardar-rutina")]
+        public async Task<ActionResult<string>> insertarRutina(Rutina[] rutina)
+        {
+            if(await _ejercicioServicio.insertarRutina(rutina))
+                return Ok(new { message = "Rutina guardada exitósamente" });
+            return BadRequest("Error al guardar la rutina");
+        }
+
+        [HttpGet("obtener-rutina")]
+        public async Task<ActionResult<Rutina[]>> obtenerRutina([FromQuery] int idUsuario, [FromQuery] DateTime fecha)
+        {
+            try
+            {
+                var rutinas = await _ejercicioServicio.obtenerRutina(idUsuario, fecha);
+
+                var rutinasProyectadas = rutinas.Select(r => new
+                {
+                    r.Id,
+                    r.IdUsuario,
+                    r.IdEjercicio,
+                    r.Series,
+                    r.Repeticionesc,
+                    r.Fecha
+                }).ToArray();
+
+                return Ok(new { rutina = rutinasProyectadas });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }

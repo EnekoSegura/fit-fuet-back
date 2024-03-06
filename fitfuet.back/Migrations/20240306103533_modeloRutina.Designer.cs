@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fit_fuet_back.Context;
 
 namespace fitfuet.back.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    partial class AplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240306103533_modeloRutina")]
+    partial class modeloRutina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,9 +98,6 @@ namespace fitfuet.back.Migrations
 
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
-
-                    b.Property<double>("Peso")
-                        .HasColumnType("float");
 
                     b.Property<int>("Repeticionesc")
                         .HasColumnType("int");

@@ -22,7 +22,7 @@ namespace fit_fuet_back.Repositorios
             _context = context;
         }
 
-        public async Task<ActionResult<List<EjercicioObjeto>>> obtenerListaEjercios()
+        public async Task<List<EjercicioObjeto>> obtenerListaEjercios()
         {
             var ejercicios = await _context.Set<Ejercicio>()
                         .Select(e => new EjercicioObjeto(
@@ -32,6 +32,30 @@ namespace fit_fuet_back.Repositorios
                             e.Tipo.ToString()))
                         .ToListAsync();
             return ejercicios;
+        }
+
+        public async Task<bool> insertarRutina(Rutina[] rutina)
+        {
+            for(int i = 0; i < rutina.Length; i++)
+                await _context.AddAsync(rutina[i]);   
+
+            var rowsAffected = await _context.SaveChangesAsync();
+
+            if (rowsAffected > 0)
+                return true;
+            return false;
+        }
+
+        public async Task<Rutina[]> obtenerRutina(int idUsuario, DateTime fecha)
+        {
+            //DateTime fechaSinHora = fecha.Date;
+
+            var rutinas = await _context.Rutina
+                .Where(r => r.IdUsuario == idUsuario &&
+                    r.Fecha == fecha.Date)
+                    .ToArrayAsync();
+
+            return rutinas;
         }
     }
 }

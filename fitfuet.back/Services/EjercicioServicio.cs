@@ -19,10 +19,22 @@ namespace fit_fuet_back.Servicios
             _ejercicicoRepositorio = ejercicicoRepositorio;
         }
 
-        public async Task<ActionResult<List<EjercicioObjeto>>> obtenerListaEjercios()
+        public async Task<List<EjercicioObjeto>> obtenerListaEjercios()
         {
             var lista = await _ejercicicoRepositorio.obtenerListaEjercios();
             return lista;
+        }
+
+        public async Task<bool> insertarRutina(Rutina[] rutina)
+        {
+            if(await _ejercicicoRepositorio.insertarRutina(rutina))
+                return true;
+            return false;
+        }
+
+        public async Task<Rutina[]> obtenerRutina(int idUsuario, DateTime fecha)
+        {
+            return await _ejercicicoRepositorio.obtenerRutina(idUsuario, fecha);
         }
     }
 }
