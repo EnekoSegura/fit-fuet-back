@@ -1,5 +1,7 @@
 ﻿using fitfuet.back.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace fitfuet.back.IControllers
@@ -13,5 +15,7 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<string>> eliminarCuenta([FromQuery] string email, [FromQuery] string passwd);
         Task<ActionResult<string>> obtenerImagenUsuario([FromQuery] int idUsuario);
         Task<ActionResult<string>> actualizarDatosUsuario([FromBody] UsuarioActualizado _usuario);
+        Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario);
+        Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerUltimosDatosCorporales([FromQuery] int idUsuario);
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -204,6 +205,46 @@ namespace fitfuet.back.Controllers
                 return Ok(new { token = tokenString });
             }
             else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("obtener-todos-los-datos")]
+        public async Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario)
+        {
+            try
+            {
+                var datosUsuario = await _usuarioService.obtenerDatosCorporales(idUsuario);
+
+                if (datosUsuario != null)
+                {
+                    return Ok(new {datosUsuario});
+                }
+
+                return BadRequest("Usuario no encontrado");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("obtener-ultimos-datos")]
+        public async Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerUltimosDatosCorporales([FromQuery] int idUsuario)
+        {
+            try
+            {
+                var datosUsuario = await _usuarioService.obtenerUltimosDatosCorporales(idUsuario);
+
+                if (datosUsuario != null)
+                {
+                    return Ok(new { datosUsuario });
+                }
+
+                return BadRequest("Usuario no encontrado");
+            }
+            catch
             {
                 return BadRequest();
             }

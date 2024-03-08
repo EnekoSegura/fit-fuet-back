@@ -1,5 +1,7 @@
 ﻿using fitfuet.back.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace fit_fuet_back.IRepositorios
@@ -16,5 +18,7 @@ namespace fit_fuet_back.IRepositorios
         Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword);
         Task<bool> UpdateUsuario(Usuario usuario);
         Task<Usuario> ActualizarDatosUsuario(UsuarioActualizado _usuarioActualizado);
+        Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario);
+        Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario);
     }
 }

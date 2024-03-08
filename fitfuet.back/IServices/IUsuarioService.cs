@@ -1,5 +1,7 @@
 ﻿using fitfuet.back.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace fit_fuet_back.IServicios
@@ -15,5 +17,7 @@ namespace fit_fuet_back.IServicios
         Task<bool> CambiarEstadoCuenta(Usuario usuario, int nuevoEstado);
         Task<string> obtenerFotoUsuario(int idUsuario);
         Task<Usuario> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario);
+        Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario);
+        Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario);
     }
 }

@@ -3,7 +3,9 @@ using fit_fuet_back.IServicios;
 using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace fit_fuet_back.Servicios
@@ -76,6 +78,16 @@ namespace fit_fuet_back.Servicios
         {
             var usuario = await _usuarioRepository.ActualizarDatosUsuario(_usuario);
             return usuario;
+        }
+
+        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerDatosCorporales(idUsuario);
+        }
+
+        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerUltimosDatosCorporales(idUsuario);
         }
     }
 }

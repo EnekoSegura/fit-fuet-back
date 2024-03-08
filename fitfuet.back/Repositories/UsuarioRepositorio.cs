@@ -5,6 +5,7 @@ using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -109,5 +110,38 @@ namespace fit_fuet_back.Repositorios
             await UpdateUsuario(usuario);
             return usuario;
         }
+
+        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario)
+        {
+            var datosUsuario = await _context.Set<DatosUsuario>()
+                .Where(u => u.IdUsuario == idUsuario && u.RegistroActivo == 0)
+                .OrderByDescending(u => u.FechaRegistro)
+                .Select(u => new Tuple<float, float, DateTime, float>(
+                    u.Altura,
+                    u.Peso,
+                    u.FechaRegistro,
+                    u.Peso / (u.Altura * u.Altura)
+                )).ToListAsync();
+
+            return datosUsuario;
+        }
+
+        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario)
+        {
+            var datosUsuario = await _context.Set<DatosUsuario>()
+                .Where(u => u.IdUsuario == idUsuario && u.RegistroActivo == 0)
+                .OrderByDescending(u => u.FechaRegistro)
+                .Take(7)
+                .OrderBy(u => u.FechaRegistro)
+                .Select(u => new Tuple<float, float, DateTime, float>(
+                    u.Altura,
+                    u.Peso,
+                    u.FechaRegistro,
+                    u.Peso / (u.Altura * u.Altura)
+                )).ToListAsync();
+
+            return datosUsuario;
+        }
+
     }
 }
