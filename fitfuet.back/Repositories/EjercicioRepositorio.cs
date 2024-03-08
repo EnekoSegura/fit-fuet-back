@@ -57,5 +57,16 @@ namespace fit_fuet_back.Repositorios
 
             return rutinas;
         }
+
+        public async Task<List<Tuple<int, string>>> obtenerNombreEjercicios()
+        {
+            var ejercicios = await _context.Set<Ejercicio>()
+                .Select(e => new Tuple<int, string>(
+                    e.Id,
+                    e.Nombre
+                )).ToListAsync();
+
+            return ejercicios;
+        }
     }
 }

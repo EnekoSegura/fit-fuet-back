@@ -4,6 +4,7 @@ using fitfuet.back.Controllers;
 using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace fit_fuet_back.Servicios
         public async Task<Rutina[]> obtenerRutina(int idUsuario, DateTime fecha)
         {
             return await _ejercicicoRepositorio.obtenerRutina(idUsuario, fecha);
+        }
+
+        public async Task<List<Tuple<int, string>>> obtenerNombreEjercicios()
+        {
+            return await _ejercicicoRepositorio.obtenerNombreEjercicios();
         }
     }
 }

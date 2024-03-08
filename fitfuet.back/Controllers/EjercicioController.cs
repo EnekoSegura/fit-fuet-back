@@ -78,5 +78,21 @@ namespace fitfuet.back.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        //devuelve una tupla de nombres e ids de los ejercicios
+        [HttpGet("obtener-nombre-ejercicios")]
+        public async Task<ActionResult<List<Tuple<int, string>>>> obtenerNombreEjercicios()
+        {
+            try
+            {
+                var listaNombreEjercicios = await _ejercicioServicio.obtenerNombreEjercicios();
+
+                return Ok(new { listaNombreEjercicios });
+            } 
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
