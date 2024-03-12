@@ -19,11 +19,10 @@ namespace fit_fuet_back.Servicios
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<int> Register([FromBody] Usuario usuario)
+        public async Task<int> Register(Usuario usuario)
         {
             if (await _usuarioRepository.Exist(usuario))
                 return 1;
-            usuario.Passwd = usuario.Passwd;
             await _usuarioRepository.Register(usuario);
             return 0;
         }

@@ -21,13 +21,13 @@ namespace fit_fuet_back.Repositorios
             _context = context;
         }
 
-        public async Task Register([FromBody] Usuario usuario)
+        public async Task Register(Usuario usuario)
         {
             await _context.AddAsync(usuario);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Exist([FromBody] Usuario usuario)
+        public async Task<bool> Exist(Usuario usuario)
         {
             var validateExistence = await _context.Usuario.AnyAsync(x => x.Dni == usuario.Dni && usuario.CuentaActiva == 1 
                                 || x.Email == usuario.Email && usuario.CuentaActiva == 1);
@@ -120,7 +120,7 @@ namespace fit_fuet_back.Repositorios
                     u.Altura,
                     u.Peso,
                     u.FechaRegistro,
-                    u.Peso / (u.Altura * u.Altura)
+                    u.Peso / ((u.Altura / 100) * (u.Altura / 100))
                 )).ToListAsync();
 
             return datosUsuario;
@@ -137,7 +137,7 @@ namespace fit_fuet_back.Repositorios
                     u.Altura,
                     u.Peso,
                     u.FechaRegistro,
-                    u.Peso / (u.Altura * u.Altura)
+                    u.Peso / ((u.Altura/100) * (u.Altura / 100))
                 )).ToListAsync();
 
             return datosUsuario;
