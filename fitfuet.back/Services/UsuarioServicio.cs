@@ -79,7 +79,7 @@ namespace fit_fuet_back.Servicios
             return usuario;
         }
 
-        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario)
+        public async Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales(int idUsuario)
         {
             return await _usuarioRepository.obtenerDatosCorporales(idUsuario);
         }
@@ -87,6 +87,16 @@ namespace fit_fuet_back.Servicios
         public async Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario)
         {
             return await _usuarioRepository.obtenerUltimosDatosCorporales(idUsuario);
+        }
+
+        public async Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerUltimoDato(idUsuario);
+        }
+
+        public async Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario)
+        {
+            return await _usuarioRepository.agregarDato(datoUsuario);
         }
     }
 }

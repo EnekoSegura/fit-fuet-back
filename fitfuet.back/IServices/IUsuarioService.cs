@@ -17,7 +17,9 @@ namespace fit_fuet_back.IServicios
         Task<bool> CambiarEstadoCuenta(Usuario usuario, int nuevoEstado);
         Task<string> obtenerFotoUsuario(int idUsuario);
         Task<Usuario> actualizarDatosUsuario([FromBody] UsuarioActualizado usuario);
-        Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario);
+        Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales(int idUsuario);
         Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario);
+        Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario);
+        Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario);
     }
 }

@@ -15,7 +15,10 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<string>> eliminarCuenta([FromQuery] string email, [FromQuery] string passwd);
         Task<ActionResult<string>> obtenerImagenUsuario([FromQuery] int idUsuario);
         Task<ActionResult<string>> actualizarDatosUsuario([FromBody] UsuarioActualizado _usuario);
-        Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario);
+        Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario);
         Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerUltimosDatosCorporales([FromQuery] int idUsuario);
+        Task<ActionResult<Tuple<float, float, DateTime, float>>> obtenerUltimoDato(int idUsuario);
+
+        Task<ActionResult> agregarDato([FromBody] DatosUsuariosInsertar datoUsuario);
     }
 }

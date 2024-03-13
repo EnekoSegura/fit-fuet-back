@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Globalization;
 
 namespace fitfuet.back.Models
 {
@@ -19,5 +20,15 @@ namespace fitfuet.back.Models
         public DateTime FechaRegistro { get; set; }
         [Required]
         public int RegistroActivo { get; set; } //0 activa, 1 inactiva
+      }
+
+    public class DatosUsuariosInsertar
+    {
+        public int IdUsuario { get; set; }
+        public float Peso { get; set; } //peso en kg
+        public float Altura { get; set; } //altura en cms
+        public string FechaRegistro { get; set; }
+        public int RegistroActivo { get; set; } //0 activa, 1 inactiva
     }
+
 }

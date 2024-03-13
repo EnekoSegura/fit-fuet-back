@@ -18,7 +18,9 @@ namespace fit_fuet_back.IRepositorios
         Task<bool> cambiarPasswd(int idUsuario, string nuevaPassword);
         Task<bool> UpdateUsuario(Usuario usuario);
         Task<Usuario> ActualizarDatosUsuario(UsuarioActualizado _usuarioActualizado);
-        Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario);
+        Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales(int idUsuario);
         Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario);
+        Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario);
+        Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario);
     }
 }

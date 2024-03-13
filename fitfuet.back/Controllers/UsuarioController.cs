@@ -1,4 +1,5 @@
-﻿using fit_fuet_back.IServicios;
+﻿using fit_fuet_back.IRepositorios;
+using fit_fuet_back.IServicios;
 using fitfuet.back.IControllers;
 using fitfuet.back.Models;
 using fitfuet.back.Utils;
@@ -211,7 +212,7 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("obtener-todos-los-datos")]
-        public async Task<ActionResult<List<Tuple<float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario)
+        public async Task<ActionResult<List<Tuple<int,float, float, DateTime, float>>>> obtenerDatosCorporales([FromQuery] int idUsuario)
         {
             try
             {
@@ -240,6 +241,46 @@ namespace fitfuet.back.Controllers
                 if (datosUsuario != null)
                 {
                     return Ok(new { datosUsuario });
+                }
+
+                return BadRequest("Usuario no encontrado");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("obtener-ultimo-dato")]
+        public async Task<ActionResult<Tuple<float, float, DateTime, float>>> obtenerUltimoDato(int idUsuario)
+        {
+            try
+            {
+                var datosUsuario = await _usuarioService.obtenerUltimoDato(idUsuario);
+
+                if (datosUsuario != null)
+                {
+                    var resultado = new Tuple<float, float, DateTime>(datosUsuario.Item1, datosUsuario.Item2, datosUsuario.Item3);
+                    return Ok(resultado);
+                }
+
+                return BadRequest("Usuario no encontrado");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("agregar-dato")]
+        public async Task<ActionResult> agregarDato([FromBody] DatosUsuariosInsertar datoUsuario)
+        {
+            try
+            {
+
+                if (await _usuarioService.agregarDato(datoUsuario))
+                {
+                    return Ok();
                 }
 
                 return BadRequest("Usuario no encontrado");

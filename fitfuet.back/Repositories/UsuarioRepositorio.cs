@@ -1,5 +1,6 @@
 ﻿using fit_fuet_back.Context;
 using fit_fuet_back.IRepositorios;
+using fitfuet.back.Migrations;
 using fitfuet.back.Models;
 using fitfuet.back.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -111,12 +112,13 @@ namespace fit_fuet_back.Repositorios
             return usuario;
         }
 
-        public async Task<List<Tuple<float, float, DateTime, float>>> obtenerDatosCorporales(int idUsuario)
+        public async Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales(int idUsuario)
         {
             var datosUsuario = await _context.Set<DatosUsuario>()
                 .Where(u => u.IdUsuario == idUsuario && u.RegistroActivo == 0)
                 .OrderByDescending(u => u.FechaRegistro)
-                .Select(u => new Tuple<float, float, DateTime, float>(
+                .Select(u => new Tuple<int,float, float, DateTime, float>(
+                    u.Id,
                     u.Altura,
                     u.Peso,
                     u.FechaRegistro,
@@ -143,5 +145,43 @@ namespace fit_fuet_back.Repositorios
             return datosUsuario;
         }
 
+        public async Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario)
+        {
+            var datoUsuario = await _context.Set<DatosUsuario>()
+                .Where(u => u.IdUsuario == idUsuario && u.RegistroActivo == 0)
+                .OrderByDescending(u => u.FechaRegistro)
+                .FirstAsync();
+
+            return new Tuple<float, float, DateTime>(
+                datoUsuario.Altura,
+                datoUsuario.Peso,
+                datoUsuario.FechaRegistro
+            );
+        }
+
+        public async Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario)
+        {
+            DateTime fecha;
+            try
+            {
+                DatosUsuario dato = new DatosUsuario();
+                dato.IdUsuario = datoUsuario.IdUsuario;
+                dato.Altura = datoUsuario.Altura;
+                dato.Peso = datoUsuario.Peso;
+                if (DateTime.TryParseExact(datoUsuario.FechaRegistro, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fecha))
+                {
+                    // Parsing successful, you can now use the 'fechaRegistro' variable
+                    dato.FechaRegistro = fecha;
+                }
+                dato.RegistroActivo = datoUsuario.RegistroActivo;
+                _context.DatosUsuario.Add(dato);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
