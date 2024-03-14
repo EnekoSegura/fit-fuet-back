@@ -159,7 +159,7 @@ namespace fit_fuet_back.Repositorios
             );
         }
 
-        public async Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario)
+        public async Task<int> agregarDato(DatosUsuariosInsertar datoUsuario)
         {
             DateTime fecha;
             try
@@ -176,12 +176,97 @@ namespace fit_fuet_back.Repositorios
                 dato.RegistroActivo = datoUsuario.RegistroActivo;
                 _context.DatosUsuario.Add(dato);
                 await _context.SaveChangesAsync();
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 3;
+            }
+        }
+
+        public async Task<DatosUsuario> buscarDatosUsuario(int idDatosUsuario, DatosUsuariosInsertar datos)
+        {
+            DateTime fecha;
+            try
+            {
+                var datosUsuario = await _context.DatosUsuario.FirstOrDefaultAsync(x => x.Id == idDatosUsuario);
+                datosUsuario.Altura = datos.Altura;
+                datosUsuario.Peso = datos.Peso;
+                if (DateTime.TryParseExact(datos.FechaRegistro, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fecha))
+                {
+                    // Parsing successful, you can now use the 'fecha' variable
+                    datosUsuario.FechaRegistro = new DateTime(fecha.Year, fecha.Month, fecha.Day);
+                }
+                datosUsuario.RegistroActivo = 0;
+                return datosUsuario;
+            } 
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> editarDato(DatosUsuario datosUsuario)
+        {
+            try
+            {
+                _context.DatosUsuario.Update(datosUsuario);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        public async Task<bool> buscarFechaDatoCorporal(DatosUsuario datosUsuario)
+        {
+            try
+            {
+                if (await _context.DatosUsuario.FirstOrDefaultAsync(x => x.FechaRegistro == datosUsuario.FechaRegistro && x.Id != datosUsuario.Id && x.IdUsuario == datosUsuario.IdUsuario) != null)
+                    return true;
+                return false;
+            } 
+            catch (Exception)
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> buscarFechaDatoCorporal(DatosUsuariosInsertar datosUsuario)
+        {
+
+            DateTime fecha;
+            try
+            {
+                DatosUsuario dato = new DatosUsuario();
+                if (DateTime.TryParseExact(datosUsuario.FechaRegistro, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fecha))
+                {
+                    // Parsing successful, you can now use the 'fechaRegistro' variable
+                    dato.FechaRegistro = fecha;
+                }
+                if (await _context.DatosUsuario.FirstOrDefaultAsync(x => x.FechaRegistro == dato.FechaRegistro && x.IdUsuario == dato.IdUsuario) != null)
+                    return true;
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> eliminarDatoCorporal(int idDatoCorporal)
+        {
+            var dato = await _context.DatosUsuario.FirstOrDefaultAsync(x => x.Id == idDatoCorporal);
+            if (dato != null)
+            {
+                dato.RegistroActivo = 1;
+                _context.DatosUsuario.Update(dato);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

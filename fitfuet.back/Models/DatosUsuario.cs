@@ -20,7 +20,7 @@ namespace fitfuet.back.Models
         public DateTime FechaRegistro { get; set; }
         [Required]
         public int RegistroActivo { get; set; } //0 activa, 1 inactiva
-      }
+    }
 
     public class DatosUsuariosInsertar
     {

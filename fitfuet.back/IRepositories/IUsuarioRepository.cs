@@ -21,6 +21,11 @@ namespace fit_fuet_back.IRepositorios
         Task<ActionResult<List<Tuple<int, float, float, DateTime, float>>>> obtenerDatosCorporales(int idUsuario);
         Task<List<Tuple<float, float, DateTime, float>>> obtenerUltimosDatosCorporales(int idUsuario);
         Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario);
-        Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario);
+        Task<int> agregarDato(DatosUsuariosInsertar datoUsuario);
+        Task<bool> editarDato(DatosUsuario datosUsuario);
+        Task<DatosUsuario> buscarDatosUsuario(int idDatosUsuario, DatosUsuariosInsertar datos);
+        Task<bool> buscarFechaDatoCorporal(DatosUsuario datosUsuario);
+        Task<bool> buscarFechaDatoCorporal(DatosUsuariosInsertar datosUsuario);
+        Task<bool> eliminarDatoCorporal(int idDatoCorporal);
     }
 }

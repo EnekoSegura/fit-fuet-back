@@ -94,9 +94,30 @@ namespace fit_fuet_back.Servicios
             return await _usuarioRepository.obtenerUltimoDato(idUsuario);
         }
 
-        public async Task<bool> agregarDato(DatosUsuariosInsertar datoUsuario)
+        public async Task<int> agregarDato(DatosUsuariosInsertar datoUsuario)
         {
+            if(await _usuarioRepository.buscarFechaDatoCorporal(datoUsuario))
+                return 2;
             return await _usuarioRepository.agregarDato(datoUsuario);
+        }
+
+        public async Task<int> editarDato(int idDatoCorporal, DatosUsuariosInsertar datoUsuario)
+        {
+            var dato = await _usuarioRepository.buscarDatosUsuario(idDatoCorporal, datoUsuario);
+            if (dato != null)
+            {
+                if (await _usuarioRepository.buscarFechaDatoCorporal(dato))
+                    return 2;
+                if (await _usuarioRepository.editarDato(dato))
+                    return 0;
+                return 3;
+            }
+            return 1;
+        }
+
+        public async Task<bool> eliminarDatoCorporal(int idDatoCorporal)
+        {
+            return await _usuarioRepository.eliminarDatoCorporal(idDatoCorporal);
         }
     }
 }

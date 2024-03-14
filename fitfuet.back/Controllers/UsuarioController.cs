@@ -273,19 +273,69 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpPost("agregar-dato")]
-        public async Task<ActionResult> agregarDato([FromBody] DatosUsuariosInsertar datoUsuario)
+        public async Task<ActionResult<string>> agregarDato([FromBody] DatosUsuariosInsertar datoUsuario)
         {
             try
             {
-
-                if (await _usuarioService.agregarDato(datoUsuario))
+                var dato = await _usuarioService.agregarDato(datoUsuario);
+                if (dato == 0)
                 {
                     return Ok();
                 }
-
-                return BadRequest("Usuario no encontrado");
+                else if (dato == 2)
+                {
+                    return BadRequest("La fecha indicada ya existe");
+                }
+                else
+                {
+                    return BadRequest("Ocurrió un error inesperado");
+                }
             }
             catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("editar-dato")]
+        public async Task<ActionResult<string>> editarDato([FromQuery] int idDatoCorporal, [FromBody] DatosUsuariosInsertar datoUsuario)
+        {
+            try
+            {
+                var dato = await _usuarioService.editarDato(idDatoCorporal, datoUsuario);
+                if (dato == 0)
+                {
+                    return Ok();
+                }
+                else if (dato == 1)
+                {
+                    return BadRequest("El usuario no existe");
+                }
+                else if (dato == 2)
+                {
+                    return BadRequest("La fecha indicada ya existe");
+                }
+                else
+                {
+                    return BadRequest("Ocurrió un error inesperado");
+                }
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("eliminar-dato-corporal")]
+        public async Task<ActionResult> eliminarDatoCorporal([FromQuery] int idDatoCorporal)
+        {
+            try
+            {
+                if(await _usuarioService.eliminarDatoCorporal(idDatoCorporal))
+                    return Ok();
+                return BadRequest();
+            }
+            catch (Exception)
             {
                 return BadRequest();
             }
