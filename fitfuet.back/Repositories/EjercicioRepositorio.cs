@@ -25,6 +25,7 @@ namespace fit_fuet_back.Repositorios
         public async Task<List<EjercicioObjeto>> obtenerListaEjercios()
         {
             var ejercicios = await _context.Set<Ejercicio>()
+                        .OrderBy(e => e.MusculoEjercitado)
                         .Select(e => new EjercicioObjeto(
                             e.Id,
                             e.Nombre,
@@ -67,6 +68,12 @@ namespace fit_fuet_back.Repositorios
                 )).ToListAsync();
 
             return ejercicios;
+        }
+
+        public async Task<Ejercicio> obtenerDescripcionEjercicio(int idEjercicio)
+        {
+            var ejercicio = await _context.Ejercicio.FirstOrDefaultAsync(x => x.Id == idEjercicio);
+            return ejercicio;
         }
     }
 }

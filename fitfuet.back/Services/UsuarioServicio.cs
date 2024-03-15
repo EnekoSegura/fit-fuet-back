@@ -119,5 +119,10 @@ namespace fit_fuet_back.Servicios
         {
             return await _usuarioRepository.eliminarDatoCorporal(idDatoCorporal);
         }
+
+        public async Task<float> obtenerUltimaAltura(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerUltimaAltura(idUsuario);
+        }
     }
 }

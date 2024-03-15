@@ -27,5 +27,6 @@ namespace fit_fuet_back.IRepositorios
         Task<bool> buscarFechaDatoCorporal(DatosUsuario datosUsuario);
         Task<bool> buscarFechaDatoCorporal(DatosUsuariosInsertar datosUsuario);
         Task<bool> eliminarDatoCorporal(int idDatoCorporal);
+        Task<float> obtenerUltimaAltura(int idUsuario);
     }
 }

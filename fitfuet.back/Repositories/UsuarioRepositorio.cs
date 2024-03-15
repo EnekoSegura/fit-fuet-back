@@ -268,5 +268,24 @@ namespace fit_fuet_back.Repositorios
             }
             return false;
         }
+
+        public async Task<float> obtenerUltimaAltura(int idUsuario)
+        {
+            try
+            {
+                var usuario = await _context.DatosUsuario
+               .Where(x => x.IdUsuario == idUsuario && x.RegistroActivo == 0)
+               .OrderByDescending(x => x.FechaRegistro)
+               .FirstOrDefaultAsync();
+
+                if (usuario != null)
+                    return usuario.Altura;
+                return -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
     }
 }

@@ -21,5 +21,6 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<string>> agregarDato([FromBody] DatosUsuariosInsertar datoUsuario);
         Task<ActionResult<string>> editarDato(int idDatoCorporal, DatosUsuariosInsertar datoUsuario);
         Task<ActionResult> eliminarDatoCorporal([FromQuery] int idDatoCorporal);
+        Task<ActionResult<float>> obtenerUltimaAltura([FromQuery] int idUsuario);
     }
 }

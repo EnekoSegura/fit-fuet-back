@@ -94,5 +94,11 @@ namespace fitfuet.back.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("obtener-descripcion-ejercicios")]
+        public async Task<ActionResult<Ejercicio>> obtenerDescripcionEjercicio([FromQuery] int idEjercicio)
+        {
+            return await _ejercicioServicio.obtenerDescripcionEjercicio(idEjercicio);
+        }
     }
 }

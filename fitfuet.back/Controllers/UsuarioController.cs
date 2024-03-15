@@ -340,5 +340,18 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("obtener-ultima-altura")]
+        public async Task<ActionResult<float>> obtenerUltimaAltura([FromQuery] int idUsuario)
+        {
+            try
+            {
+                return await _usuarioService.obtenerUltimaAltura(idUsuario);
+            }
+            catch
+            { 
+                return BadRequest(); 
+            }
+        }
     }
 }

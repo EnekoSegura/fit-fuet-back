@@ -42,5 +42,10 @@ namespace fit_fuet_back.Servicios
         {
             return await _ejercicicoRepositorio.obtenerNombreEjercicios();
         }
+
+        public async Task<Ejercicio> obtenerDescripcionEjercicio(int idEjercicio)
+        {
+            return await _ejercicicoRepositorio.obtenerDescripcionEjercicio(idEjercicio);
+        }
     }
 }

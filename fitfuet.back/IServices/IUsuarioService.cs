@@ -23,5 +23,6 @@ namespace fit_fuet_back.IServicios
         Task<int> agregarDato(DatosUsuariosInsertar datoUsuario);
         Task<int> editarDato(int idDatoCorporal, DatosUsuariosInsertar datoUsuario);
         Task<bool> eliminarDatoCorporal(int idDatoCorporal);
+        Task<float> obtenerUltimaAltura(int idUsuario);
     }
 }
