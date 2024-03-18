@@ -14,12 +14,10 @@ namespace fitfuet.back.Models
         public int IdEjercicio { get; set; }
         [ForeignKey("IdEjercicio")]
         public Ejercicio Ejercicio { get; set; }
-        [Required]
         public int Series { get; set; }
-        [Required]
-        public int Repeticionesc { get; set; }
-        [Required]
+        public int Repeticiones { get; set; }
         public double Peso { get; set; }
+        public double Tiempo { get; set; }
         [Required]
         public DateTime Fecha { get; set; }
 

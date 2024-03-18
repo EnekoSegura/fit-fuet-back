@@ -67,7 +67,7 @@ namespace fitfuet.back.Controllers
                     r.IdUsuario,
                     r.IdEjercicio,
                     r.Series,
-                    r.Repeticionesc,
+                    r.Repeticiones,
                     r.Fecha
                 }).ToArray();
 
@@ -81,7 +81,7 @@ namespace fitfuet.back.Controllers
 
         //devuelve una tupla de nombres e ids de los ejercicios
         [HttpGet("obtener-nombre-ejercicios")]
-        public async Task<ActionResult<List<Tuple<int, string>>>> obtenerNombreEjercicios()
+        public async Task<ActionResult<List<Tuple<int, string, string>>>> obtenerNombreEjercicios()
         {
             try
             {

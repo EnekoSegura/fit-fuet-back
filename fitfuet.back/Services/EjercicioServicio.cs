@@ -38,7 +38,7 @@ namespace fit_fuet_back.Servicios
             return await _ejercicicoRepositorio.obtenerRutina(idUsuario, fecha);
         }
 
-        public async Task<List<Tuple<int, string>>> obtenerNombreEjercicios()
+        public async Task<List<Tuple<int, string, string>>> obtenerNombreEjercicios()
         {
             return await _ejercicicoRepositorio.obtenerNombreEjercicios();
         }

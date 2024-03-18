@@ -38,13 +38,10 @@ namespace fit_fuet_back.Repositorios
         public async Task<bool> insertarRutina(Rutina[] rutina)
         {
             for(int i = 0; i < rutina.Length; i++)
-                await _context.AddAsync(rutina[i]);   
+                await _context.Rutina.AddAsync(rutina[i]);   
+            await _context.SaveChangesAsync();
 
-            var rowsAffected = await _context.SaveChangesAsync();
-
-            if (rowsAffected > 0)
                 return true;
-            return false;
         }
 
         public async Task<Rutina[]> obtenerRutina(int idUsuario, DateTime fecha)
@@ -59,12 +56,13 @@ namespace fit_fuet_back.Repositorios
             return rutinas;
         }
 
-        public async Task<List<Tuple<int, string>>> obtenerNombreEjercicios()
+        public async Task<List<Tuple<int, string, string>>> obtenerNombreEjercicios()
         {
             var ejercicios = await _context.Set<Ejercicio>()
-                .Select(e => new Tuple<int, string>(
+                .Select(e => new Tuple<int, string, string>(
                     e.Id,
-                    e.Nombre
+                    e.Nombre,
+                    e.Tipo.ToString()
                 )).ToListAsync();
 
             return ejercicios;
