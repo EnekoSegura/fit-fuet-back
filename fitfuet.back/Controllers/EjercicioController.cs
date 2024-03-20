@@ -100,5 +100,35 @@ namespace fitfuet.back.Controllers
         {
             return await _ejercicioServicio.obtenerDescripcionEjercicio(idEjercicio);
         }
+
+        [HttpGet("obtener-todas-rutinas")]
+        public async Task<ActionResult<List<Tuple<DateTime, bool, bool>>>> obtenerTodasRutinas([FromQuery] int idUsuario)
+        {
+            try
+            {
+                var listaRutinas = await _ejercicioServicio.obtenerTodasRutinas(idUsuario);
+
+                return Ok(new { listaRutinas });
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("obtener-rutina-diaria")]
+        public async Task<ActionResult<List<Rutina>>> obtenerRutinaDiaria([FromQuery] int idUsuario, [FromQuery] string fecha)
+        {
+            try
+            {
+                var rutina = await _ejercicioServicio.obtenerRutinaDiaria(idUsuario, fecha);
+
+                return Ok(new { rutina });
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -73,5 +73,57 @@ namespace fit_fuet_back.Repositorios
             var ejercicio = await _context.Ejercicio.FirstOrDefaultAsync(x => x.Id == idEjercicio);
             return ejercicio;
         }
+
+        public async Task<List<Tuple<DateTime, bool, bool>>> obtenerTodasRutinas(int idUsuario)
+        {
+            List<Tuple<DateTime, bool, bool>> tuplasRutinas = new List<Tuple<DateTime, bool, bool>>();
+
+            var fechas = await _context.Rutina.Where(x => x.IdUsuario == idUsuario)
+                .GroupBy(x => x.Fecha)
+                .Select(group => group.Key)
+                .ToListAsync();
+
+            for (int i = 0; i < fechas.Count; i++)
+            {
+                var tieneFuerza = false;
+                var tieneCardio = false;
+
+                var ejercicios = await _context.Rutina.Where(x => x.Fecha == fechas[i] && x.IdUsuario == idUsuario)
+                    .Select(x => x.IdEjercicio).ToListAsync();
+
+                for(int j = 0; j < ejercicios.Count; j++)
+                {
+                    var tipoEjercicio = await _context.Ejercicio.Where(x => x.Id == ejercicios[j])
+                        .Select(x => x.Tipo)
+                        .FirstOrDefaultAsync();
+                    
+                    if(tipoEjercicio == TipoEjercicio.Fuerza)
+                        tieneFuerza = true;
+
+                    if (tipoEjercicio == TipoEjercicio.Cardio)
+                        tieneCardio = true;
+
+                    if(tieneFuerza == true && tieneCardio == true)
+                        break;
+
+                }
+
+                Tuple<DateTime, bool, bool> tupla = new Tuple<DateTime, bool, bool>(fechas[i], tieneFuerza, tieneCardio);
+
+                tuplasRutinas.Add(tupla);
+            }
+
+            return tuplasRutinas;
+        }
+
+        public async Task<List<Rutina>> obtenerRutinaDiaria(int idUsuario, DateTime fecha)
+        {
+            var rutina = await _context.Rutina
+                .Include(r => r.Ejercicio)
+                .Where(x => x.Fecha == fecha && x.IdUsuario == idUsuario)
+                .ToListAsync();
+
+            return rutina;
+        }
     }
 }

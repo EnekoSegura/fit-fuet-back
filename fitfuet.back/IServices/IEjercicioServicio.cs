@@ -15,5 +15,7 @@ namespace fit_fuet_back.IServicios
         Task<Rutina[]> obtenerRutina(int idUsuario, DateTime fecha);
         Task<List<Tuple<int, string, string>>> obtenerNombreEjercicios();
         Task<Ejercicio> obtenerDescripcionEjercicio(int idEjercicio);
+        Task<List<Tuple<DateTime, bool, bool>>> obtenerTodasRutinas(int idUsuario);
+        Task<List<Rutina>> obtenerRutinaDiaria(int idUsuario, string fecha);
     }
 }

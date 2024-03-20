@@ -14,5 +14,7 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<Rutina[]>> obtenerRutina([FromQuery] int idUsuario, [FromQuery] DateTime fecha);
         Task<ActionResult<List<Tuple<int, string, string>>>> obtenerNombreEjercicios();
         Task<ActionResult<Ejercicio>> obtenerDescripcionEjercicio([FromQuery] int idEjercicio);
+        Task<ActionResult<List<Tuple<DateTime, bool, bool>>>> obtenerTodasRutinas([FromQuery] int idUsuario);
+        Task<ActionResult<List<Rutina>>> obtenerRutinaDiaria([FromQuery] int idUsuario, [FromQuery] string fecha);
     }
 }

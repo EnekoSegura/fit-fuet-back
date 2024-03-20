@@ -47,5 +47,29 @@ namespace fit_fuet_back.Servicios
         {
             return await _ejercicicoRepositorio.obtenerDescripcionEjercicio(idEjercicio);
         }
+
+        public async Task<List<Tuple<DateTime, bool, bool>>> obtenerTodasRutinas(int idUsuario)
+        {
+            return await _ejercicicoRepositorio.obtenerTodasRutinas(idUsuario);
+        }
+
+        public async Task<List<Rutina>> obtenerRutinaDiaria(int idUsuario, string fecha)
+        {
+            return await _ejercicicoRepositorio.obtenerRutinaDiaria(idUsuario, ConvertirStringToDateTime(fecha));
+        }
+
+        public static DateTime ConvertirStringToDateTime(string str)
+        {
+            string strLimpia = str.Trim('"');
+            DateTime dateTime;
+            if (DateTime.TryParse(strLimpia, out dateTime))
+            {
+                return dateTime;
+            }
+            else
+            {
+                throw new ArgumentException("La cadena no tiene un formato de fecha y hora válido.");
+            }
+        }
     }
 }
