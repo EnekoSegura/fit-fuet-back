@@ -252,7 +252,7 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("obtener-ultimo-dato")]
-        public async Task<ActionResult<Tuple<float, float, DateTime, float>>> obtenerUltimoDato(int idUsuario)
+        public async Task<ActionResult<Tuple<float, float, DateTime, float>>> obtenerUltimoDato([FromQuery] int idUsuario)
         {
             try
             {

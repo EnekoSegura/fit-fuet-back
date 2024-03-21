@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20240306140917_quitarRutinaModel.Designer.cs" />
     <Compile Remove="Migrations\20240311185422_prueba.cs" />
     <Compile Remove="Migrations\20240311185422_prueba.Designer.cs" />
+    <Compile Remove="Migrations\20240321092836_ModeloAlimentos.cs" />
+    <Compile Remove="Migrations\20240321092836_ModeloAlimentos.Designer.cs" />
+    <Compile Remove="Migrations\20240321093004_ModeloAlimentos.cs" />
+    <Compile Remove="Migrations\20240321093004_ModeloAlimentos.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

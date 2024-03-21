@@ -10,6 +10,7 @@ namespace fit_fuet_back.Context
         public DbSet<DatosUsuario> DatosUsuario { get; set; }
         public DbSet<Ejercicio> Ejercicio { get; set; }
         public DbSet<Rutina> Rutina { get; set; }
+        public DbSet<Alimentos> Alimentos { get; set; }
 
         public AplicationDbContext(DbContextOptions<AplicationDbContext> options) : base(options)
         {
