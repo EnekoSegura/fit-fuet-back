@@ -53,5 +53,23 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("obtener-dieta")]
+        public async Task<ActionResult<List<Dieta>>> obtenerDietaPorDiaYUsuario([FromQuery] int idUsuario, [FromQuery] DateTime fecha)
+        {
+            try
+            {
+                var dietaList = await _alimentoServicio.obtenerDietaPorDiaYUsuario(idUsuario, fecha);
+                if (dietaList != null)
+                {
+                    return Ok(new { dietaList });
+                }
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

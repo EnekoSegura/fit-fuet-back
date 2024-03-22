@@ -29,5 +29,10 @@ namespace fit_fuet_back.Servicios
         {
             return await _alimentoRepositorio.insertarAlimentacion(dieta);
         }
+
+        public async Task<List<Dieta>> obtenerDietaPorDiaYUsuario(int idUsuario, DateTime fecha)
+        {
+            return await _alimentoRepositorio.obtenerDietaPorDiaYUsuario(idUsuario, fecha);
+        }
     }
 }

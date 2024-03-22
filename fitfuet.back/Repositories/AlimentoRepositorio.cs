@@ -37,5 +37,14 @@ namespace fit_fuet_back.Repositorios
                 return true;
             return false;
         }
+
+        public async Task<List<Dieta>> obtenerDietaPorDiaYUsuario(int idUsuario, DateTime fecha)
+        {
+            var dieta = await _context.Dieta
+                .Where(x => x.IdUsuario == idUsuario && x.Fecha == fecha)
+                .Include(r => r.Alimento)
+                .ToListAsync();
+            return dieta;
+        }
     }
 }
