@@ -50,7 +50,7 @@ namespace fitfuet.back.Controllers
             }
             catch (Exception)
             {
-                return BadRequest("Error al añadir la dieta");
+                return BadRequest();
             }
         }
     }

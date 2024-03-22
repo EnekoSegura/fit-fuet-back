@@ -12,7 +12,7 @@ namespace fitfuet.back.Models
         public Usuario Usuario { get; set; }
         [Required]
         public int IdAlimento { get; set; }
-        [ForeignKey("IdEjercicio")]
+        [ForeignKey("IdAlimento")]
         public Alimentos Alimento { get; set; }
         [Required]
         public double Cantidad { get; set; }
