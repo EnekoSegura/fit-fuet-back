@@ -35,5 +35,23 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("insertar-dieta")]
+        public async Task<ActionResult<string>> insertarAlimentacion([FromBody] Dieta dieta)
+        {
+            try
+            {
+                if(await _alimentoServicio.insertarAlimentacion(dieta))
+                {
+                    string msg = "Dieta añadida correctamente";
+                    return Ok(new { msg });
+                }
+                return BadRequest("No se pudo añadir la dieta correctamente");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Error al añadir la dieta");
+            }
+        }
     }
 }

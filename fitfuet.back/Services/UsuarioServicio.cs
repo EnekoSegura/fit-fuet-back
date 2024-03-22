@@ -124,5 +124,10 @@ namespace fit_fuet_back.Servicios
         {
             return await _usuarioRepository.obtenerUltimaAltura(idUsuario);
         }
+
+        public async Task<bool> addSuenio(Suenio suenio)
+        {
+            return await _usuarioRepository.addSuenio(suenio);
+        }
     }
 }

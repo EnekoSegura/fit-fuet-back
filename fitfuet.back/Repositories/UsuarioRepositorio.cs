@@ -287,5 +287,13 @@ namespace fit_fuet_back.Repositorios
                 return -1;
             }
         }
+
+        public async Task<bool> addSuenio(Suenio suenio)
+        {
+            await _context.Suenio.AddAsync(suenio);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

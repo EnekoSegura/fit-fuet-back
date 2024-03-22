@@ -24,5 +24,10 @@ namespace fit_fuet_back.Servicios
         {
             return await _alimentoRepositorio.obtenerTodosAlimentos();
         }
+
+        public async Task<bool> insertarAlimentacion(Dieta dieta)
+        {
+            return await _alimentoRepositorio.insertarAlimentacion(dieta);
+        }
     }
 }

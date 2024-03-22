@@ -353,5 +353,19 @@ namespace fitfuet.back.Controllers
                 return BadRequest(); 
             }
         }
+
+        [HttpPost("suenio")]
+        public async Task<ActionResult<bool>> addSuenio([FromBody] Suenio suenio)
+        {
+            try
+            {
+                var resultado = await _usuarioService.addSuenio(suenio);
+                return Ok(resultado);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

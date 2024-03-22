@@ -24,5 +24,6 @@ namespace fit_fuet_back.IServicios
         Task<int> editarDato(int idDatoCorporal, DatosUsuariosInsertar datoUsuario);
         Task<bool> eliminarDatoCorporal(int idDatoCorporal);
         Task<float> obtenerUltimaAltura(int idUsuario);
+        Task<bool> addSuenio(Suenio suenio);
     }
 }

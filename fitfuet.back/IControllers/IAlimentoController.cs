@@ -11,5 +11,6 @@ namespace fitfuet.back.IControllers
 
     {
         Task<ActionResult<List<Alimentos>>> obtenerTodosAlimentos();
+        Task<ActionResult<string>> insertarAlimentacion([FromBody] Dieta dieta);
     }
 }

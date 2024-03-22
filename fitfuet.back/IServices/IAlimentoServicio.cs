@@ -10,5 +10,6 @@ namespace fit_fuet_back.IServicios
     public interface IAlimentoServicio
     {
         Task<List<Alimentos>> obtenerTodosAlimentos();
+        Task<bool> insertarAlimentacion(Dieta dieta);
     }
 }

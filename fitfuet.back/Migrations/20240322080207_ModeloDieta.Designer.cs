@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fit_fuet_back.Context;
 
 namespace fitfuet.back.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    partial class AplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240322080207_ModeloDieta")]
+    partial class ModeloDieta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,36 +186,6 @@ namespace fitfuet.back.Migrations
                     b.ToTable("Rutina");
                 });
 
-            modelBuilder.Entity("fitfuet.back.Models.Suenio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Calidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HoraAcostar")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("HoraLevantar")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumLevantar")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.ToTable("Suenio");
-                });
-
             modelBuilder.Entity("fitfuet.back.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -282,15 +254,6 @@ namespace fitfuet.back.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("fitfuet.back.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("fitfuet.back.Models.Suenio", b =>
-                {
                     b.HasOne("fitfuet.back.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("IdUsuario")

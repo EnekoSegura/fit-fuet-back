@@ -28,5 +28,14 @@ namespace fit_fuet_back.Repositorios
                         .ToListAsync();
             return alimentos;
         }
+
+        public async Task<bool> insertarAlimentacion(Dieta dieta)
+        {
+            var annadido = await _context.AddAsync(dieta);
+            await _context.SaveChangesAsync();
+            if (annadido != null)
+                return true;
+            return false;
+        }
     }
 }
