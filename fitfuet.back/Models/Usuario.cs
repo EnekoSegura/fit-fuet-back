@@ -24,6 +24,8 @@ namespace fitfuet.back.Models
         public int CuentaActiva { get; set; } //0 activa, 1 inactiva
         [Column(TypeName = "nvarchar(MAX)")]
         public string Foto { get; set; }
+        [Required]
+        public int Modo { get; set; } //Modo 0 definicion, modo 1 mantenimiento, modo 2 volumen
     }
 
     public class UsuarioActualizado : EntidadBase

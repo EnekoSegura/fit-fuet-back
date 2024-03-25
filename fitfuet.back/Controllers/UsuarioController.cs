@@ -263,6 +263,8 @@ namespace fitfuet.back.Controllers
                     var resultado = new Tuple<float, float, DateTime>(datosUsuario.Item1, datosUsuario.Item2, datosUsuario.Item3);
                     return Ok(resultado);
                 }
+                else if (datosUsuario.Item1 == -1 && datosUsuario.Item2 == -1)
+                    return Ok("Sin datos del usuario");
 
                 return BadRequest("Usuario no encontrado");
             }
@@ -364,6 +366,41 @@ namespace fitfuet.back.Controllers
             }
             catch
             {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("obtener-modo")]
+        public async Task<ActionResult<int>> obtenerModo([FromQuery] int idUsuario)
+        {
+            try
+            {
+                var modo = await _usuarioService.obtenerModo(idUsuario);
+
+                if(modo >= 0)
+                    return Ok(new { modo });
+                return BadRequest();
+            }
+            catch (Exception)
+            { 
+                return BadRequest(); 
+            }
+        }
+
+        [HttpPost("cambiar-modo")]
+        public async Task<ActionResult<string>> cambiarModo([FromQuery] int idUsuario, [FromQuery] int modo)
+        {
+            try
+            {
+                if (await _usuarioService.cambiarModo(idUsuario, modo))
+                {
+                    var msg = "Modo cambiado exitósamente";
+                    return Ok(new { msg });
+                } 
+                return BadRequest();
+            }
+            catch (Exception)
+            { 
                 return BadRequest();
             }
         }

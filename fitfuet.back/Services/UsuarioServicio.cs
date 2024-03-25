@@ -129,5 +129,23 @@ namespace fit_fuet_back.Servicios
         {
             return await _usuarioRepository.addSuenio(suenio);
         }
+
+        public async Task<int> obtenerModo(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerModo(idUsuario);
+        }
+
+        public async Task<bool> cambiarModo(int idUsuario, int nuevoModo)
+        {
+            var usuario = await _usuarioRepository.GetUser(idUsuario);
+
+            if (usuario != null)
+            {
+                if(await _usuarioRepository.cambiarModo(usuario, nuevoModo))
+                    return true;
+                return false;
+            }
+            return false;
+        }
     }
 }

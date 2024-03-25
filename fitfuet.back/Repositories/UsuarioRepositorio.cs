@@ -147,16 +147,28 @@ namespace fit_fuet_back.Repositorios
 
         public async Task<Tuple<float, float, DateTime>> obtenerUltimoDato(int idUsuario)
         {
-            var datoUsuario = await _context.Set<DatosUsuario>()
+            try
+            {
+                var datoUsuario = await _context.Set<DatosUsuario>()
                 .Where(u => u.IdUsuario == idUsuario && u.RegistroActivo == 0)
                 .OrderByDescending(u => u.FechaRegistro)
                 .FirstAsync();
 
-            return new Tuple<float, float, DateTime>(
-                datoUsuario.Altura,
-                datoUsuario.Peso,
-                datoUsuario.FechaRegistro
-            );
+                return new Tuple<float, float, DateTime>(
+                    datoUsuario.Altura,
+                    datoUsuario.Peso,
+                    datoUsuario.FechaRegistro
+                );
+            }
+            catch ( Exception )
+            {
+                return new Tuple<float, float, DateTime>(
+                    -1,
+                    -1,
+                    new DateTime()
+                );
+            }
+            
         }
 
         public async Task<int> agregarDato(DatosUsuariosInsertar datoUsuario)
@@ -294,6 +306,37 @@ namespace fit_fuet_back.Repositorios
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<int> obtenerModo(int idUsuario)
+        {
+            try
+            {
+                var modo = await _context.Set<Usuario>()
+                    .Where(x => x.Id == idUsuario)
+                    .Select(x => x.Modo).FirstOrDefaultAsync();
+
+                return modo;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        public async Task<bool> cambiarModo(Usuario usuario, int nuevoModo)
+        {
+            try
+            {
+                usuario.Modo = nuevoModo;
+                _context.Update(usuario);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            { 
+                return false; 
+            }
         }
     }
 }
