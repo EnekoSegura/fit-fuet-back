@@ -15,10 +15,12 @@ namespace fitfuet.back.Controllers
     public class AlimentoController : Controller, IAlimentoController
     {
         private readonly IAlimentoServicio _alimentoServicio;
+        private readonly IUsuarioService _usuarioService;
 
-        public AlimentoController(IAlimentoServicio alimentoServicio)
+        public AlimentoController(IAlimentoServicio alimentoServicio, IUsuarioService usuarioService)
         {
             _alimentoServicio = alimentoServicio;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet("obtener-todos-alimentos")]
@@ -55,14 +57,40 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("obtener-dieta")]
-        public async Task<ActionResult<List<Dieta>>> obtenerDietaPorDiaYUsuario([FromQuery] int idUsuario, [FromQuery] DateTime fecha)
+        public async Task<ActionResult<Tuple<List<Dieta>, double, double, double, double>>> obtenerDietaPorDiaYUsuario([FromQuery] int idUsuario, [FromQuery] DateTime fecha)
         {
             try
             {
                 var dietaList = await _alimentoServicio.obtenerDietaPorDiaYUsuario(idUsuario, fecha);
                 if (dietaList != null)
                 {
-                    return Ok(new { dietaList });
+                    var modoUsuario = await _usuarioService.obtenerModo(idUsuario);
+                    var datoUsuario = await _usuarioService.obtenerUltimoDato(idUsuario);
+
+                    var kcalRequerido = (datoUsuario.Item2 * 24) * 1.5;
+
+                    if(modoUsuario == 0)
+                    {
+                        kcalRequerido = kcalRequerido - 300;
+                    } 
+                    else if(modoUsuario == 2)
+                    {
+                        kcalRequerido = kcalRequerido + 300;
+                    }
+
+                    var cantidadCarboTotal = (kcalRequerido * 0.5) / 4;
+                    var cantidadProteTotal = (kcalRequerido * 0.25) / 4;
+                    var cantidadGrasaTotal = (kcalRequerido * 0.25) / 9;
+
+                    Tuple<List<Dieta>, double, double, double, double> tuplaDieta = new Tuple<List<Dieta>, double, double, double, double>(
+                            dietaList,
+                            kcalRequerido,
+                            cantidadCarboTotal,
+                            cantidadProteTotal,
+                            cantidadGrasaTotal
+                        );
+
+                    return Ok(new { tuplaDieta });
                 }
                 return BadRequest();
             }
