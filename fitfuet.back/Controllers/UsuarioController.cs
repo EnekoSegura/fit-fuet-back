@@ -362,11 +362,13 @@ namespace fitfuet.back.Controllers
             try
             {
                 var resultado = await _usuarioService.addSuenio(suenio);
-                return Ok(resultado);
+                if(resultado)
+                    return Ok(resultado);
+                return BadRequest("La fecha indicada ya está registrada");
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Error al añadir el sueño");
             }
         }
 
@@ -401,6 +403,40 @@ namespace fitfuet.back.Controllers
             }
             catch (Exception)
             { 
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("get-suenios")]
+        public async Task<ActionResult<List<Suenio>>> obtenerListaSuenio([FromQuery] int idUsuario)
+        {
+            try
+            {
+                var suenioList = await _usuarioService.obtenerListaSuenio(idUsuario);
+
+                if (suenioList != null)
+                    return Ok(new { suenioList });
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("get-suenio")]
+        public async Task<ActionResult<Suenio>> obtenerSuenio([FromQuery] int idUsuario, [FromQuery] DateTime horaAcostar)
+        {
+            try
+            {
+                var suenio = await _usuarioService.obtenerSuenio(idUsuario, horaAcostar);
+
+                if (suenio != null)
+                    return Ok(new { suenio });
+                return BadRequest();
+            }
+            catch (Exception)
+            {
                 return BadRequest();
             }
         }

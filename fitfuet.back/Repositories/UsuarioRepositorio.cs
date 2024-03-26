@@ -338,5 +338,65 @@ namespace fit_fuet_back.Repositorios
                 return false; 
             }
         }
+
+        public async Task<List<Suenio>> obtenerListaSuenio(int idUsuario)
+        {
+            try
+            {
+                var suenioList = await _context.Suenio.Where(x => x.IdUsuario == idUsuario).ToListAsync();
+                return suenioList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar)
+        {
+            try
+            {
+                var suenioObtenido = await _context.Suenio
+                 .Where(x => x.HoraAcostar.Date == horaAcostar.Date &&
+                            x.IdUsuario == idUsuario)
+                 .FirstOrDefaultAsync();
+
+                return suenioObtenido;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> updateSuenio(Suenio suenio)
+        {
+            try
+            {
+                _context.Update(suenio);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> existeDiaLevantar(int idUsuario, DateTime horaLevantar)
+        {
+            try
+            {
+                var existe = await _context.Suenio.AnyAsync(x => x.IdUsuario == idUsuario && x.HoraLevantar.Date == horaLevantar.Date);
+
+                if (existe)
+                    return true;
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
     }
 }

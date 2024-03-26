@@ -27,5 +27,7 @@ namespace fit_fuet_back.IServicios
         Task<bool> addSuenio(Suenio suenio);
         Task<int> obtenerModo(int idUsuario);
         Task<bool> cambiarModo(int idUsuario, int nuevoModo);
+        Task<List<Suenio>> obtenerListaSuenio(int idUsuario);
+        Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar);
     }
 }

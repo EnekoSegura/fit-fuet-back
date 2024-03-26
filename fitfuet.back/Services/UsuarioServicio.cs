@@ -127,6 +127,11 @@ namespace fit_fuet_back.Servicios
 
         public async Task<bool> addSuenio(Suenio suenio)
         {
+            var existe = await _usuarioRepository.existeDiaLevantar(suenio.IdUsuario, suenio.HoraLevantar);
+
+            if (existe)
+                return false;
+
             return await _usuarioRepository.addSuenio(suenio);
         }
 
@@ -147,5 +152,16 @@ namespace fit_fuet_back.Servicios
             }
             return false;
         }
+
+        public async Task<List<Suenio>> obtenerListaSuenio(int idUsuario)
+        {
+            return await _usuarioRepository.obtenerListaSuenio(idUsuario);
+        }
+
+        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar)
+        {
+            return await _usuarioRepository.obtenerSuenio(idUsuario, horaAcostar);
+        }
+
     }
 }
