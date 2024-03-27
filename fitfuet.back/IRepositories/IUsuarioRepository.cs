@@ -32,8 +32,8 @@ namespace fit_fuet_back.IRepositorios
         Task<int> obtenerModo(int idUsuario);
         Task<bool> cambiarModo(Usuario usuario, int nuevoModo);
         Task<List<Suenio>> obtenerListaSuenio(int idUsuario);
-        Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar);
-        Task<bool> updateSuenio(Suenio suenio);
+        Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaLevantar);
         Task<bool> existeDiaLevantar(int idUsuario, DateTime horaLevantar);
+        Task<bool> updateSuenio(Suenio suenio);
     }
 }

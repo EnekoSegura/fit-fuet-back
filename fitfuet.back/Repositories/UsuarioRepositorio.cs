@@ -352,12 +352,12 @@ namespace fit_fuet_back.Repositorios
             }
         }
 
-        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar)
+        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaLevantar)
         {
             try
             {
                 var suenioObtenido = await _context.Suenio
-                 .Where(x => x.HoraAcostar.Date == horaAcostar.Date &&
+                 .Where(x => x.HoraLevantar.Date == horaLevantar.Date &&
                             x.IdUsuario == idUsuario)
                  .FirstOrDefaultAsync();
 
@@ -366,20 +366,6 @@ namespace fit_fuet_back.Repositorios
             catch (Exception)
             {
                 return null;
-            }
-        }
-
-        public async Task<bool> updateSuenio(Suenio suenio)
-        {
-            try
-            {
-                _context.Update(suenio);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
             }
         }
 
@@ -396,6 +382,20 @@ namespace fit_fuet_back.Repositorios
             catch (Exception)
             {
                 return true;
+            }
+        }
+
+        public async Task<bool> updateSuenio(Suenio suenio)
+        {
+            try
+            {
+                _context.Update(suenio);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

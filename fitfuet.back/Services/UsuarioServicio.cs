@@ -158,9 +158,14 @@ namespace fit_fuet_back.Servicios
             return await _usuarioRepository.obtenerListaSuenio(idUsuario);
         }
 
-        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaAcostar)
+        public async Task<Suenio> obtenerSuenio(int idUsuario, DateTime horaLevantar)
         {
-            return await _usuarioRepository.obtenerSuenio(idUsuario, horaAcostar);
+            return await _usuarioRepository.obtenerSuenio(idUsuario, horaLevantar);
+        }
+
+        public async Task<bool> updateSuenio(Suenio suenio)
+        {
+           return await _usuarioRepository.updateSuenio(suenio);
         }
 
     }

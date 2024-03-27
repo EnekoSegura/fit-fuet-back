@@ -26,6 +26,7 @@ namespace fitfuet.back.IControllers
         Task<ActionResult<int>> obtenerModo([FromQuery] int idUsuario);
         Task<ActionResult<string>> cambiarModo([FromQuery] int idUsuario, [FromQuery] int nuevoModo);
         Task<ActionResult<List<Suenio>>> obtenerListaSuenio([FromQuery] int idUsuario);
-        Task<ActionResult<Suenio>> obtenerSuenio([FromQuery] int idUsuario, [FromQuery] DateTime horaAcostar);
+        Task<ActionResult<Suenio>> obtenerSuenio([FromQuery] int idUsuario, [FromQuery] DateTime horaLevantar);
+        Task<ActionResult<string>> updateSuenio([FromBody] Suenio suenio);
     }
 }

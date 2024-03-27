@@ -425,14 +425,34 @@ namespace fitfuet.back.Controllers
         }
 
         [HttpGet("get-suenio")]
-        public async Task<ActionResult<Suenio>> obtenerSuenio([FromQuery] int idUsuario, [FromQuery] DateTime horaAcostar)
+        public async Task<ActionResult<Suenio>> obtenerSuenio([FromQuery] int idUsuario, [FromQuery] DateTime horaLevantar)
         {
             try
             {
-                var suenio = await _usuarioService.obtenerSuenio(idUsuario, horaAcostar);
+                var suenio = await _usuarioService.obtenerSuenio(idUsuario, horaLevantar);
 
                 if (suenio != null)
                     return Ok(new { suenio });
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("update-suenio")]
+        public async Task<ActionResult<string>> updateSuenio([FromBody] Suenio suenio)
+        {
+            try
+            {
+                var suenioActualizado = await _usuarioService.updateSuenio(suenio);
+
+                if (suenioActualizado)
+                {
+                    var msg = "Sueño actualizado correctamente";
+                    return Ok(new {msg});
+                }
                 return BadRequest();
             }
             catch (Exception)
