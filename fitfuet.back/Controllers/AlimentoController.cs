@@ -99,5 +99,22 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("obtener-recomendacion")]
+        public async Task<ActionResult<string>> obtenerRecomendacion([FromQuery] double porcentajeCarbo, [FromQuery] double porcentajeProte, [FromQuery] double porcentajeGrasa)
+        {
+            try
+            {
+                var alimentoRecomendacion = await _alimentoServicio.obtenerRecomendacion(porcentajeCarbo, porcentajeProte, porcentajeGrasa);
+                if (alimentoRecomendacion != "")
+                    return Ok(new { alimentoRecomendacion });
+
+                return BadRequest("No se pudo obtener recomendación");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Hubo un error a la hora de obtener una recomendación");
+            }
+        }
     }
 }

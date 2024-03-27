@@ -13,5 +13,6 @@ namespace fit_fuet_back.IRepositorios
         Task<List<Alimentos>> obtenerTodosAlimentos();
         Task<bool> insertarAlimentacion(Dieta dieta);
         Task<List<Dieta>> obtenerDietaPorDiaYUsuario(int idUsuario, DateTime fecha);
+        Task<List<string>> obtenerRecomendacion(double cantidadMacro, string macro = "");
     }
 }

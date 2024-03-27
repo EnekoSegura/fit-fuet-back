@@ -12,5 +12,6 @@ namespace fit_fuet_back.IServicios
         Task<List<Alimentos>> obtenerTodosAlimentos();
         Task<bool> insertarAlimentacion(Dieta dieta);
         Task<List<Dieta>> obtenerDietaPorDiaYUsuario(int idUsuario, DateTime fecha);
+        Task<string> obtenerRecomendacion(double porcentajeCarbo, double porcentajeProte, double porcentajeGrasa);
     }
 }

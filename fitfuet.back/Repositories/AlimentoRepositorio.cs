@@ -46,5 +46,60 @@ namespace fit_fuet_back.Repositorios
                 .ToListAsync();
             return dieta;
         }
+
+        public async Task<List<string>> obtenerRecomendacion(double cantidadMacro, string macro = "")
+        {
+            try
+            {
+                List<Alimentos> listaAlimentos;
+                if (macro.Equals("carbo"))
+                {
+                    listaAlimentos = await _context.Alimentos
+                        .Where(x => x.Carbohidratos > cantidadMacro 
+                            && x.TipoAlimento != "Grasas y Aceites" 
+                            && x.TipoAlimento != "Bebidas no alcohólicas" 
+                            && x.TipoAlimento != "Bebidas alcohólicas" 
+                            && x.TipoAlimento != "Condimentos y Salsas"
+                            && x.TipoAlimento != "Aperitivos"
+                            && x.TipoAlimento != "Dulces"
+                            && x.TipoAlimento != "Otros")
+                        .ToListAsync();
+                }
+                else if (macro.Equals("prote"))
+                {
+                    listaAlimentos = await _context.Alimentos
+                        .Where(x => x.Proteinas > cantidadMacro
+                            && x.TipoAlimento != "Grasas y Aceites"
+                            && x.TipoAlimento != "Bebidas no alcohólicas"
+                            && x.TipoAlimento != "Bebidas alcohólicas"
+                            && x.TipoAlimento != "Condimentos y Salsas"
+                            && x.TipoAlimento != "Aperitivos"
+                            && x.TipoAlimento != "Dulces"
+                            && x.TipoAlimento != "Otros")
+                        .ToListAsync();
+                }
+                else
+                {
+                    listaAlimentos = await _context.Alimentos
+                        .Where(x => x.Grasas > cantidadMacro
+                            && x.TipoAlimento != "Grasas y Aceites"
+                            && x.TipoAlimento != "Bebidas no alcohólicas"
+                            && x.TipoAlimento != "Bebidas alcohólicas"
+                            && x.TipoAlimento != "Condimentos y Salsas"
+                            && x.TipoAlimento != "Aperitivos"
+                            && x.TipoAlimento != "Dulces"
+                            && x.TipoAlimento != "Otros")
+                        .ToListAsync();
+                }
+
+                var nombreAlimentos = listaAlimentos.Select(x => x.Nombre).ToList();
+
+                return nombreAlimentos;
+            }
+            catch (Exception)
+            {
+                return new List<string>();
+            }
+        }
     }
 }
