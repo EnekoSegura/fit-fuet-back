@@ -71,5 +71,10 @@ namespace fit_fuet_back.Servicios
                 throw new ArgumentException("La cadena no tiene un formato de fecha y hora válido.");
             }
         }
+
+        public async Task<Rutina> obtenerRutinaEjercicio(int idRutina)
+        {
+            return await _ejercicicoRepositorio.obtenerRutinaEjercicio(idRutina);
+        }
     }
 }

@@ -130,5 +130,22 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("obtener-rutina-ejercicio")]
+        public async Task<ActionResult<Rutina>> obtenerRutinaEjercicio([FromQuery] int idRutina)
+        {
+            try
+            {
+                var rutina = await _ejercicioServicio.obtenerRutinaEjercicio(idRutina);
+
+                if(rutina != null)
+                    return Ok(new { rutina });
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

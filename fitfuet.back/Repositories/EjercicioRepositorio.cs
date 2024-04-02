@@ -125,5 +125,14 @@ namespace fit_fuet_back.Repositorios
 
             return rutina;
         }
+
+        public async Task<Rutina> obtenerRutinaEjercicio(int idRutina)
+        {
+            var rutina = await _context.Rutina
+                .Include(r => r.Ejercicio)
+                .Where(x => x.Id == idRutina)
+                .FirstOrDefaultAsync();
+            return rutina;
+        }
     }
 }

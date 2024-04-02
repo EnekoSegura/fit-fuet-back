@@ -17,5 +17,6 @@ namespace fit_fuet_back.IRepositorios
         Task<Ejercicio> obtenerDescripcionEjercicio(int idEjercicio);
         Task<List<Tuple<DateTime, bool, bool>>> obtenerTodasRutinas(int idUsuario);
         Task<List<Rutina>> obtenerRutinaDiaria(int idUsuario, DateTime fecha);
+        Task<Rutina> obtenerRutinaEjercicio(int idRutina);
     }
 }
