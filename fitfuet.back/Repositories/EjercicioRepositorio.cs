@@ -134,5 +134,39 @@ namespace fit_fuet_back.Repositorios
                 .FirstOrDefaultAsync();
             return rutina;
         }
+
+        public async Task<bool> eliminarEjercicioRutina(int idRutina)
+        {
+            try
+            {
+                var rutina = await _context.Rutina.FirstOrDefaultAsync(x => x.Id == idRutina);
+
+                if (rutina != null)
+                {
+                    _context.Rutina.Remove(rutina);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> updateEjercicioRutina(Rutina rutina)
+        {
+            try
+            {
+                _context.Rutina.Update(rutina);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

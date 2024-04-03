@@ -147,5 +147,35 @@ namespace fitfuet.back.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete("borrar-rutina-ejercicio")]
+        public async Task<ActionResult<string>> eliminarEjercicioRutina([FromQuery] int idRutina)
+        {
+            try
+            {
+                if (await _ejercicioServicio.eliminarEjercicioRutina(idRutina))
+                    return Ok();
+                return BadRequest("No se pudo eliminar el ejercicio de la rutina");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Error a la hora de eliminar el ejercicio de la rutina");
+            }
+        }
+
+        [HttpPut("update-rutina-ejercicio")]
+        public async Task<ActionResult<string>> updateEjercicioRutina([FromBody] Rutina rutina)
+        {
+            try
+            {
+                if (await _ejercicioServicio.updateEjercicioRutina(rutina))
+                    return Ok();
+                return BadRequest("No se pudo actualizar el ejercicio de la rutina");
+            }
+            catch 
+            {
+                return BadRequest("Ocurrió un error intentando actualizar el ejercicio");
+            }
+        }
     }
 }

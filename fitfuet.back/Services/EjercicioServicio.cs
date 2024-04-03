@@ -76,5 +76,15 @@ namespace fit_fuet_back.Servicios
         {
             return await _ejercicicoRepositorio.obtenerRutinaEjercicio(idRutina);
         }
+
+        public async Task<bool> eliminarEjercicioRutina(int idRutina)
+        {
+            return await _ejercicicoRepositorio.eliminarEjercicioRutina(idRutina);
+        }
+
+        public async Task<bool> updateEjercicioRutina(Rutina rutina)
+        {
+            return await _ejercicicoRepositorio.updateEjercicioRutina(rutina);
+        }
     }
 }
