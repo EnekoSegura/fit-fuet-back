@@ -3,6 +3,8 @@ using fit_fuet_back.IRepositorios;
 using fit_fuet_back.IServicios;
 using fit_fuet_back.Repositorios;
 using fit_fuet_back.Servicios;
+using fitfuet.back.IServices;
+using fitfuet.back.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +44,7 @@ namespace fitfuet.back
             services.AddScoped<IUsuarioService, UsuarioServicio>();
             services.AddScoped<IEjercicioServicio, EjercicicoServicio>();
             services.AddScoped<IAlimentoServicio, AlimentoServicio>();
+            services.AddScoped<IChatService, ChatService>();
 
             //Repositorios
             services.AddScoped<IUsuarioRepository, UsuarioRepositorio>();
@@ -50,6 +54,17 @@ namespace fitfuet.back
             //Cors
             services.AddCors(options => options.AddPolicy("AllowWebapp",
                 builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSockets",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowAnyOrigin();
+                    });
+            });
 
             //Autenticación
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -93,9 +108,17 @@ namespace fitfuet.back
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCors("AllowSockets");
+            app.UseWebSockets();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGet("/ws", async context =>
+                {
+                    var chatService = context.RequestServices.GetRequiredService<IChatService>();
+                    await chatService.HandleWebSocket(context);
+                });
             });
         }
     }
