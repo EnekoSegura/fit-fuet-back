@@ -5,6 +5,6 @@ namespace fitfuet.back.IServices
 {
     public interface IChatService
     {
-        Task HandleWebSocket(HttpContext context);
+        Task HandleWebSocket(HttpContext context, int userId);
     }
 }

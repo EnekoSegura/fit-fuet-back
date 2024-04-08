@@ -5,18 +5,35 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using fitfuet.back.IServices;
+using System.Collections.Generic;
+using fit_fuet_back.IServicios;
 
 namespace fitfuet.back.Services
 {
     public class ChatService: IChatService
     {
 
-        public async Task HandleWebSocket(HttpContext context)
+        private readonly IUsuarioService _usuarioService;
+        private readonly IChatStateService _cs;
+        private List<string> connectedUsers = new List<string>();
+
+        public ChatService(IUsuarioService usuarioService, IChatStateService cs)
+        {
+            _usuarioService = usuarioService;
+            _cs = cs;
+        }
+
+        public async Task HandleWebSocket(HttpContext context, int userId)
         {
             if (context.WebSockets.IsWebSocketRequest)
             {
                 WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                await Echo(context, webSocket);
+
+                string username = await _usuarioService.GetUsername(userId);
+                Tuple<WebSocket, string> tuplaUsuario = new Tuple<WebSocket, string>(webSocket, username);
+                _cs.ConnectedUsers.Add(userId, tuplaUsuario);
+
+                await Echo(context, webSocket, userId, username);
             }
             else
             {
@@ -24,7 +41,7 @@ namespace fitfuet.back.Services
             }
         }
 
-        private async Task Echo(HttpContext context, WebSocket webSocket)
+        private async Task Echo(HttpContext context, WebSocket webSocket, int userId, string username)
         {
             // Mensaje de bienvenida
             string welcomeMessage = "¡Bienvenido al servidor de chat!";
@@ -42,14 +59,24 @@ namespace fitfuet.back.Services
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                    _cs.ConnectedUsers.Remove(userId);
                     break;
                 }
 
                 // Procesar el mensaje recibido y enviar una respuesta
                 string receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                string responseMessage = $"Mensaje recibido: '{receivedMessage}'";
-                var responseBuffer = Encoding.UTF8.GetBytes(responseMessage);
-                await webSocket.SendAsync(new ArraySegment<byte>(responseBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
+                string responseMessage = $"{receivedMessage}";
+                DateTime currentTime = DateTime.Now;
+                string currentTimeString = currentTime.ToString("dd/MM/yyyy HH:mm:ss");
+
+                var responseBuffer = Encoding.UTF8.GetBytes($"{username}||{receivedMessage}||{currentTimeString}");
+                foreach (var user in _cs.ConnectedUsers)
+                {
+                    var userWebSocket = user.Value.Item1; // Obtener el WebSocket del usuario desde el diccionario
+
+                    // Enviar el mensaje al WebSocket del usuario
+                    await userWebSocket.SendAsync(new ArraySegment<byte>(responseBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
             }
         }
 

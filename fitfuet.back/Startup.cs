@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,6 +46,7 @@ namespace fitfuet.back
             services.AddScoped<IEjercicioServicio, EjercicicoServicio>();
             services.AddScoped<IAlimentoServicio, AlimentoServicio>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddSingleton<IChatStateService, ChatStateService>(); //para solo tener una instancia
 
             //Repositorios
             services.AddScoped<IUsuarioRepository, UsuarioRepositorio>();
@@ -116,8 +118,22 @@ namespace fitfuet.back
                 endpoints.MapControllers();
                 endpoints.MapGet("/ws", async context =>
                 {
-                    var chatService = context.RequestServices.GetRequiredService<IChatService>();
-                    await chatService.HandleWebSocket(context);
+                    if (context.WebSockets.IsWebSocketRequest)
+                    {
+                        string userId = context.Request.Query["userId"];
+                        if (string.IsNullOrEmpty(userId))
+                        {
+                            context.Response.StatusCode = 400;
+                            return;
+                        }
+
+                        var chatService = context.RequestServices.GetRequiredService<IChatService>();
+                        await chatService.HandleWebSocket(context, Int32.Parse(userId));
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 400;
+                    }
                 });
             });
         }
