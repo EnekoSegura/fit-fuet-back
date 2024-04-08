@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using System.Linq;
 using fitfuet.back.IServices;
 using System.Collections.Generic;
 using fit_fuet_back.IServicios;
@@ -15,7 +16,6 @@ namespace fitfuet.back.Services
 
         private readonly IUsuarioService _usuarioService;
         private readonly IChatStateService _cs;
-        private List<string> connectedUsers = new List<string>();
 
         public ChatService(IUsuarioService usuarioService, IChatStateService cs)
         {
@@ -33,6 +33,8 @@ namespace fitfuet.back.Services
                 Tuple<WebSocket, string> tuplaUsuario = new Tuple<WebSocket, string>(webSocket, username);
                 _cs.ConnectedUsers.Add(userId, tuplaUsuario);
 
+                await EnviarListaUsuariosConectados();
+
                 await Echo(context, webSocket, userId, username);
             }
             else
@@ -41,13 +43,35 @@ namespace fitfuet.back.Services
             }
         }
 
+        private async Task EnviarListaUsuariosConectados()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var kvp in _cs.ConnectedUsers)
+            {
+                stringBuilder.Append(kvp.Value.Item2); // Agregar el string al StringBuilder
+                stringBuilder.Append(","); // Separador
+            }
+            // Eliminar la coma adicional al final, si es necesario
+            if (stringBuilder.Length > 0)
+            {
+                stringBuilder.Length--; // Eliminar el último carácter (coma)
+            }
+            // Obtener la cadena resultante
+            string usersAsString = stringBuilder.ToString();
+
+            foreach (var user in _cs.ConnectedUsers)
+            {
+                var userWebSocket = user.Value.Item1;
+
+                // Enviar mensaje especial para actualizar lista de usuarios conectados
+                var message = $"{usersAsString}";
+                var responseBuffer = Encoding.UTF8.GetBytes(message);
+                await userWebSocket.SendAsync(new ArraySegment<byte>(responseBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+        }
+
         private async Task Echo(HttpContext context, WebSocket webSocket, int userId, string username)
         {
-            // Mensaje de bienvenida
-            string welcomeMessage = "¡Bienvenido al servidor de chat!";
-            var welcomeBuffer = Encoding.UTF8.GetBytes(welcomeMessage);
-            await webSocket.SendAsync(new ArraySegment<byte>(welcomeBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
-
             // Mantener la conexión abierta y esperar mensajes entrantes
             var buffer = new byte[1024 * 4];
             while (webSocket.State == WebSocketState.Open)
@@ -60,16 +84,16 @@ namespace fitfuet.back.Services
                 {
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                     _cs.ConnectedUsers.Remove(userId);
+                    await EnviarListaUsuariosConectados();
                     break;
                 }
 
                 // Procesar el mensaje recibido y enviar una respuesta
                 string receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                string responseMessage = $"{receivedMessage}";
                 DateTime currentTime = DateTime.Now;
                 string currentTimeString = currentTime.ToString("dd/MM/yyyy HH:mm:ss");
 
-                var responseBuffer = Encoding.UTF8.GetBytes($"{username}||{receivedMessage}||{currentTimeString}");
+                var responseBuffer = Encoding.UTF8.GetBytes($"{userId}||{username}||{receivedMessage}||{currentTimeString}");
                 foreach (var user in _cs.ConnectedUsers)
                 {
                     var userWebSocket = user.Value.Item1; // Obtener el WebSocket del usuario desde el diccionario
