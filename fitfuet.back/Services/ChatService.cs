@@ -8,6 +8,8 @@ using System.Linq;
 using fitfuet.back.IServices;
 using System.Collections.Generic;
 using fit_fuet_back.IServicios;
+using fitfuet.back.Models;
+using fitfuet.back.IRepositories;
 
 namespace fitfuet.back.Services
 {
@@ -16,11 +18,13 @@ namespace fitfuet.back.Services
 
         private readonly IUsuarioService _usuarioService;
         private readonly IChatStateService _cs;
+        private readonly IChatRepository _chatRepository;
 
-        public ChatService(IUsuarioService usuarioService, IChatStateService cs)
+        public ChatService(IUsuarioService usuarioService, IChatStateService cs, IChatRepository chatRepository)
         {
             _usuarioService = usuarioService;
             _cs = cs;
+            _chatRepository = chatRepository;
         }
 
         public async Task HandleWebSocket(HttpContext context, int userId)
@@ -93,6 +97,9 @@ namespace fitfuet.back.Services
                 DateTime currentTime = DateTime.Now;
                 string currentTimeString = currentTime.ToString("dd/MM/yyyy HH:mm:ss");
 
+                //Agregamos el mensaje a la base de datos
+                await InsertarMensaje(userId, receivedMessage, currentTimeString);
+
                 var responseBuffer = Encoding.UTF8.GetBytes($"{userId}||{username}||{receivedMessage}||{currentTimeString}");
                 foreach (var user in _cs.ConnectedUsers)
                 {
@@ -104,5 +111,14 @@ namespace fitfuet.back.Services
             }
         }
 
+        public async Task<List<Mensaje>> GetMensajes()
+        {
+            return await _chatRepository.GetMensajes();
+        }
+
+        public async Task InsertarMensaje(int idUsuario, string mensaje, string fechaMensaje)
+        {
+            await _chatRepository.InsertarMensaje(idUsuario, mensaje, fechaMensaje);
+        }
     }
 }

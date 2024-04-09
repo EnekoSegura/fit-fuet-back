@@ -1,13 +1,11 @@
 ﻿using fitfuet.back.Models;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace fitfuet.back.IServices
+namespace fitfuet.back.IRepositories
 {
-    public interface IChatService
+    public interface IChatRepository
     {
-        Task HandleWebSocket(HttpContext context, int userId);
         Task<List<Mensaje>> GetMensajes();
         Task InsertarMensaje(int idUsuario, string mensaje, string fechaMensaje);
     }

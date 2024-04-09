@@ -13,6 +13,7 @@ namespace fit_fuet_back.Context
         public DbSet<Alimentos> Alimentos { get; set; }
         public DbSet<Dieta> Dieta { get; set; }
         public DbSet<Suenio> Suenio { get; set; }
+        public DbSet<Mensaje> Mensaje { get; set; }
 
         public AplicationDbContext(DbContextOptions<AplicationDbContext> options) : base(options)
         {

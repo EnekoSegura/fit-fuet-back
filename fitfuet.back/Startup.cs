@@ -3,7 +3,9 @@ using fit_fuet_back.IRepositorios;
 using fit_fuet_back.IServicios;
 using fit_fuet_back.Repositorios;
 using fit_fuet_back.Servicios;
+using fitfuet.back.IRepositories;
 using fitfuet.back.IServices;
+using fitfuet.back.Repositories;
 using fitfuet.back.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +54,7 @@ namespace fitfuet.back
             services.AddScoped<IUsuarioRepository, UsuarioRepositorio>();
             services.AddScoped<IEjercicioRepositorio, EjercicioRepositorio>();
             services.AddScoped<IAlimentoRepositorio, AlimentoRepositorio>();
+            services.AddScoped<IChatRepository, ChatRepository>();
 
             //Cors
             services.AddCors(options => options.AddPolicy("AllowWebapp",
